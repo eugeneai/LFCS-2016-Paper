@@ -33,7 +33,7 @@
 \mainmatter  % start of an individual contribution
 
 % first the title is needed
-\title{Automated Theorem Proving Based on the Calculus of Positively Constructed Formulas\thanks{Ok}}
+\title{Software for Automated Theorem Proving Based on the Calculus of Positively Constructed Formulas\thanks{Ok}}
 % a short form should be given in case it is too long for the running head
 \titlerunning{ATP Based on the PCF Calculus}
 
@@ -79,7 +79,7 @@
 %==========================ABSTRACT=====================================
 %=======================================================================
 \begin{abstract}
-A description of the calculus of positively constructed formulas (PCF) and prover based on this calculus is considered in this paper. The PCF calculus has been developed by Russian scientists S.N. Vassiliev and A.K. Zherlov by an evolutionary way in describing and solving control theory problems. This calculus has features, which are applicable in control theory. The described implementation of the prover uses several techniques and strategies to improve prover performance. The prover is being tested by means of solving problems from TPTP library. The usage of implemented strategies is also commented in this paper.
+A description of the calculus of positively constructed formulas (PCF) and prover based on this calculus is considered. The PCF calculus has been developed by Russian scientists S.N. Vassiliev and A.K. Zherlov by an evolutionary way in describing and solving control theory problems. This calculus has features, which are applicable in control theory. The described implementation of the prover uses several techniques and strategies to improve prover performance. The prover is being tested by means of solving problems from TPTP library. The usage of implemented inference search strategies is also commented in this paper.
 \keywords{positively constructed formulas, automated theorem proving, proof strategies}
 \end{abstract}
 
@@ -90,11 +90,11 @@ A description of the calculus of positively constructed formulas (PCF) and prove
 %=======================================================================
 \section{Introduction}
 
-Originally \cite{SNV1990,ICDS2000} the calculus of positively constructed formulas (PCF) was developed by Russian scientists S.N. Vassilyev and A.K. Zherlov by an evolutionary way in describing and solving control theory (CT) problems. In \cite{ICDS2000} the PCF calculus is presented as first-order logical formalism, examples of CT problems described  and solved by the PCF calculus (elevator group control, mobile robot action planning and telescope guidance), proof of soundness and completeness are presented as well.
+Originally \cite{SNV1990,ICDS2000} the calculus of positively constructed formulas (PCF) was developed by Russian scientists S.N. Vassilyev and A.K. Zherlov by an evolutionary way in describing and solving control theory (CT) problems. In \cite{ICDS2000} the PCF calculus is presented as first-order logical formalism, examples of CT problems described and solved by the PCF calculus (elevator group control, mobile robot action planning and telescope guidance), as well as proof of soundness and completeness.
 
-The PCF calculus is positioned as not only machine-oriented, but also as a human-oriented, mostly aimed at solving the problems of dynamic systems control due to the following features of this calculus: unique inference rule and simple scheme of axioms; modifiability of semantics (constructive, monotonic, temporal, etc.) and besides it is possible to construct intuitionistic inferences of some non-Horn formulas; the explicit usage of $\forall$ and $\exists$ quantifiers, the scolemization procedure is not required.
+The PCF calculus is both machine-oriented, and also human-oriented, naturally aimed at solving the problems of dynamic systems control thanks to its features such as follows: unique inference rule and simple scheme of axioms; modifiability of semantics (constructive, monotonic, temporal, etc.) and besides it is possible to construct intuitionistic inferences of some non-Horn formulas; the explicit usage of $\forall$ and $\exists$ quantifiers, the scolemization procedure is not required.
 
-However, in this paper, we will not cover the human--orientability properties of the PCF calculus and its dynamic systems control properties as well. We deal with the automatic search of a logical inference, as the inference engine capabilities are the basis of the problem solving systems, described in \cite{ICDS2000}. In order to estimate the applicability of the PCF calculus for automatic theorem proving we develop a prover program and test it on problems from TPTP library.
+However, in this paper, we will not cover the human--orientability properties of the PCF calculus and its dynamic systems control properties as well.  This and the calculus capabilities in action planning is described in \cite{ICDS2000}.   Here, we deal with the automatic search of a logical inference, i.e., the inference engine capabilities.  In order to estimate the applicability of the PCF calculus for automatic theorem proving we develop a prover program and test it on problems from TPTP library.
 
 %This paper contains a description of the PCF calculus, an implementation of the prover program, and strategies of logical inference used to direct the inference search algorithms. The results of a comparison of the developed prover system with other provers are presented.
 
@@ -102,23 +102,24 @@ However, in this paper, we will not cover the human--orientability properties of
 %=======================================================================
 %==========================BACKGROUND===================================
 %=======================================================================
-\section{Background}
-We consider the language of first-order logic consist in formulas build on atomic formulas with $\&, \vee, \neg, \rightarrow, \leftrightarrow$ operators, $\forall$ and $\exists$ quantifier symbols and constant operators $true$ and $false$. The terms term, atom, literal we define in the usual way. FOFs.
+\section{Preliminaries PCF Calculus}
 
-Let $X = \{x_1,\ldots,x_k\}$ be the set of variables, $A = \{A_1,\ldots,A_m\}$ be the set of atomic formulas, and $F = \{F_1,\ldots,F_n\}$ be the set of some FOFs. Then the following formulas $((\forall x_1) \ldots (\forall x_k) (A_1 \& \ldots \& A_m \rightarrow (F_1 \vee \ldots \vee F_n)))$ and $((\exists x_1) \ldots (\exists x_k) (A_1 \& \ldots \& A_m \& (F_1 \& \ldots \& F_n)))$ are denoted as  $\forall_XA\colon F$ and $\exists_XA\colon F$ respectively, keeping in mind that the $\forall$--quantifier corresponds to $\rightarrow F$, where $F$ means disjunction of all formulas from $F$, and $\exists$--quantifier corresponds to $\& F$, where $F$ means conjunctions of all formulas from $F$.
+Let's consider a language of first-order logic (FOL) that consists of first-order formulas (FOFs) built out of atomic formulas with $\&, \vee, \neg, \rightarrow, \leftrightarrow$ operators, $\forall$ and $\exists$ quantifier symbols and constants $true$ and $false$.  The concepts of \emph{term}, \emph{atom}, \emph{literal} we define in the usual way.
 
-If $F = \emptyset$, then the formulas have the form $\forall_XA\colon\emptyset \equiv \forall_XA \rightarrow false$ and $\exists_XA\colon\emptyset \equiv \exists_XA \& true$, since the empty disjunction is identical to $false$, whereas the empty conjunction is identical to $true$. The form $\forall_XA$ and $\exists_XA$ are abbreviations of the [abovementioned] formulas. If $X = \emptyset$, then $\forall A\colon F$ and $\exists A\colon F$ are analogous abbreviations.
+Let $X = \{x_1,\ldots,x_k\}$ be a set of variables, $A = \{A_1,\ldots,A_m\}$ be a set of atomic formulas, and $F = \{F_1,\ldots,F_n\}$ be a set of FOFs. Then the following formulas $((\forall x_1) \ldots (\forall x_k) (A_1 \& \ldots \& A_m \rightarrow (F_1 \vee \ldots \vee F_n)))$ and $((\exists x_1) \ldots (\exists x_k) (A_1 \& \ldots \& A_m \& (F_1 \& \ldots \& F_n)))$ are denoted as  $\forall_XA\colon F$ and $\exists_XA\colon F$ respectively, keeping in mind that the $\forall$--quantifier corresponds to $\rightarrow F^{\vee}$, where $F^{\vee}$ means disjunction of all formulas from $F$, and $\exists$--quantifier corresponds to $\& F^{\&}$, where $F^{\&}$ means conjunctions of all formulas from $F$.
+
+If $F = \emptyset$, then the formulas have the form $\forall_XA\colon\emptyset \equiv \forall_XA \rightarrow false$ and $\exists_XA\colon\emptyset \equiv \exists_XA \& true$, since the empty disjunction is identical to $false$, whereas the empty conjunction is identical to $true$.  The form $\forall_XA$ and $\exists_XA$ are abbreviations of such formulas.  If $X = \emptyset$, then $\forall A\colon F$ and $\exists A\colon F$ are analogous abbreviations.
 
 The set of atoms $A$ is called {\em conjunct}. The empty conjunct is identical to $true$ as it was already mentioned.
 
-Variables from $X$ are bounded by correspoding quantifiers and called $\forall$--variables and $\exists$--variables, respectively. In $\forall_XA$ a variable from $X$ that does not appear in conjunct $A$ is called {\em unconfined} variable.
+Variables from $X$ are bound by correspoding quantifiers and called $\forall$--variables and $\exists$--variables, respectively. In $\forall_XA$, a variable from $X$ that does not appear in conjunct $A$ is called {\em unconfined} variable.
 
 %В связи с изложенными сокращениями отметим следующий факт:
 $\forall \emptyset \equiv \forall \emptyset\colon\emptyset \equiv \forall true \rightarrow false \equiv false$
 
-Construction $\forall_XA$ and $\exists_XA$ are called positive typical quantifiers (TQ), because $A$ is a conjunction of only positive atoms meaned as typical condition for $X$. In practise, this constructions denote the following phrases: ``for all $X$ satisfying $A$ there is...'' or ``there exists $X$ satisfying property $A$ such that...''. For example, ``for all integer $x,y,z$ and $n>2$ there is $x^n + y^n \ne z^n$''.
+Construction $\forall_XA$ and $\exists_XA$ are called positive \emph{type quantifiers} (TQ), because $A$ is a conjunction of only positive atoms and referred to as also as \emph{type condition} for $X$. In practise, this constructions denote phrases such as follows: ``for all $X$ satisfying $A$ there is...'' or ``there exists $X$ satisfying property $A$ such that...''; ``for all integer $x,y,z$ and $n>2$ there is $x^n + y^n \ne z^n$''.
 
-Originally, the term ``typical quantifier'' was introduced by N. Bourbaki \cite{Bourbaki} as part of notation for formalisation of mathematics. But typical quantifiers are stable in the languages of another applied fields.
+Originally, the term ``type quantifier'' was introduced by N.~Bourbaki \cite{Bourbaki} as part of notation for formalization of mathematics. But type quantifiers are stable in languages of another applied fields.
 
 %========================================================
 \section{The Method of PCF}
@@ -127,7 +128,7 @@ Originally, the term ``typical quantifier'' was introduced by N. Bourbaki \cite{
 
 \begin{definition}[Positively--constructed formulas (PCF)]
 \label{def:pcf}
-Let, $X$ be the set of variables, and $A$ be a conjunct.
+Let, $X$ be a set of variables, and $A$ be a conjunct.
 \begin{enumerate}
 
 \item $\exists_XA$ and $\forall_XA$ are $\exists$--PCF and $\forall$--PCF respectively.
@@ -143,11 +144,11 @@ Let, $X$ be the set of variables, and $A$ be a conjunct.
 This form of logical formulas is referred to as positively constructed formulas (PCFs), as they are written with only positive type quantifiers. The formulas contain no explicit logic negation sign. Any FOF can be represented as PCF \cite{ICDS2000}.
 %Таким образом ПО--формула есть особый вид записи классических формул языка предикатов, подобно КНФ, ДНФ и др.
 
-PCF that started from $\forall \emptyset$ is called PCF in {\em canonical form}. Any PCF can be represented in the canonical form. Let $F$ is a $\exists$--PCF, then formula
-$\forall \emptyset\colon F \equiv true \rightarrow F \equiv F$. If $F$ is a non-canonical $\forall$--PCF, then $\forall \emptyset\colon\{\exists \emptyset\colon F\} \equiv true \rightarrow \{true\&F\} \equiv F$. Typical quantifiers $\forall \emptyset$ and $\exists \emptyset$ are called {\em fictitious}, since they does not influence on truth of original PCF and does not bound any variables.  %а только лишь служат конструкциями сохраняющими корректную запись ПОФ.
+PCF that started from $\forall \emptyset$ is called PCF in a {\em canonical form}. Any PCF can be represented in the canonical form. Let $F$ is a $\exists$--PCF, then formula
+$\forall \emptyset\colon F \equiv true \rightarrow F \equiv F$. If $F$ is a non-canonical $\forall$--PCF, then $\forall \emptyset\colon\{\exists \emptyset\colon F\} \equiv true \rightarrow \{true\&F\} \equiv F$. Type quantifiers $\forall \emptyset$ and $\exists \emptyset$ are called {\em fictitious}, since they do not influence on truth value of an original PCF and do not bind any variables.  %а только лишь служат конструкциями сохраняющими корректную запись ПОФ.
 
 %Для удобства читаемости формул, будем представлять их в древовидной форме следующим образом:
-The PCFs are usually represented as a tree for more ease reading:
+The PCFs are usually represented as trees for more ease reading:
 $$Q_XA\colon\{F_1,\ldots,F_n\} \equiv Q_XA \left\{
 \begin{array}{lcl}
  F_1 \\
@@ -156,14 +157,14 @@ $$Q_XA\colon\{F_1,\ldots,F_n\} \equiv Q_XA \left\{
 \end{array}
 \right.,$$
 
-\noindent{} where $Q$ is a quantifier. The tree elements have conventional names: node, root, leaf, branch etc. As the quantifiers $\forall$ correspond to disjunctions of formulas $\{F_1,\ldots,F_n\}$, (quantifiers $\exists$ correspond to a conjunction), then, in a general case, all $\forall$-nodes correspond a {\em disjunctive branching}, and for $\exists$-nodes correspond to {\em conjunctive branching}.
+\noindent where $Q$ is a quantifier. Tree elements have conventional names: \emph{node}, \emph{root}, \emph{leaf}, \emph{branch}, etc. As the quantifiers $\forall$ correspond to disjunctions of formulas $\{F_1,\ldots,F_n\}$ (quantifiers $\exists$ correspond to a conjunction), then all $\forall$-nodes correspond a {\em disjunctive branching}, and for $\exists$-nodes correspond to {\em conjunctive branching}.
 
-Some parts of canonical PCF are named as follows:
+Some parts of canonical PCF are denoted as follows:
 \begin{enumerate}
-\item PCF root $\forall \emptyset$ is called {\em PCF root};
-\item PCF root children $\exists_XA$ are called {\em PCF bases}, conjunct $A$ is called {\em base of facts}, and PCF rooted from base is called {\em base subformula};
-\item PCF bases children $\forall_YB$ are caled {\em questions} to parent base. If question is a leaf of tree then it is called {\em goal question}.
-\item subtrees of questions are called {\em consequents}. The consequent of goal question is $false$.
+\item PCF root $\forall \emptyset$ is called PCF {\em root};
+\item Each PCF root child $\exists_XA$ is called PCF {\em base}, conjunct $A$ is called {\em base of facts}, and PCF rooted from base is called {\em base subformula};
+\item PCF base children $\forall_YB$ are called {\em questions} to its parent base.  If a question is a leaf of a tree then it is called {\em goal question}.
+\item subtrees of questions are called {\em consequents}.  The absent consequent of a goal question is identical to $false$.
 \end{enumerate}
 
 %как правило
@@ -176,10 +177,10 @@ In the sequel, only PCFs in the canonical form are considered.
 %PCFs have a tree-like structure, therefore we can use corresponding terminology and represent PCFs as trees.
 %Any $\forall$--variable that does not occur in the corresponding conjunct is called {\em unconfined} variable.
 
-Some parts of a PCF are denoted by particular terms: the topmost (0-depth) node is called {\em root}; a 1-depth node is called {\em base} (of formula); a maximal subtree that rooted at the 1-depth node is called {\em base subformula}; a 2-depth node is called {\em question} (to its base); a maximal subtree that rooted at the 2-depth node is called {\em question subformula}; a maximal subtree that rooted at 3-depth node is called {\em consequent} (subformula). With respect to Definition~\ref{def:semantic} if an even-depth (odd-depth) node has more than one children then the node has {\em disjunctive branching} (correspondingly {\em conjunctive branching}).%; if a node of PCF has a following form $\forall \bar{x}\colon A$ and if $\exists v \in \bar{x}$ and $v \notin A$ then variable $v$ is called {\em unconfined} variable. %The semantics of the denotation used results from the above mentioned human--orientation of the PCF calculi.
+% Some parts of a PCF are denoted by particular terms: the topmost (0-depth) node is called {\em root}; a 1-depth node is called {\em base} (of formula); a maximal subtree that rooted at the 1-depth node is called {\em base subformula}; a 2-depth node is called {\em question} (to its base); a maximal subtree that rooted at the 2-depth node is called {\em question subformula}; a maximal subtree that rooted at 3-depth node is called {\em consequent} (subformula). With respect to Definition~\ref{def:semantic} if an even-depth (odd-depth) node has more than one children then the node has {\em disjunctive branching} (correspondingly {\em conjunctive branching}).%; if a node of PCF has a following form $\forall \bar{x}\colon A$ and if $\exists v \in \bar{x}$ and $v \notin A$ then variable $v$ is called {\em unconfined} variable. %The semantics of the denotation used results from the above mentioned human--orientation of the PCF calculi.
 
 \begin{example}
-Let us consider a formula of FOL.
+Let us consider a PCF representation of a FOF.
 $$F= \neg\bigl(\forall x\:\exists y P(x,y)\rightarrow \exists z P(z,z)\bigr).$$
 An image $F^{\text{\tiny{PCF}}}$ of $F$ in the PCF language is
 
