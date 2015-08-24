@@ -33,7 +33,7 @@
 \mainmatter  % start of an individual contribution
 
 % first the title is needed
-\title{Automated Theorem Proving Based on the Calculus of Positively Constructed Formulas}
+\title{Automated Theorem Proving Based on the Calculus of Positively Constructed Formulas\thanks{Ok}}
 % a short form should be given in case it is too long for the running head
 \titlerunning{ATP Based on the PCF Calculus}
 
@@ -43,9 +43,7 @@
 % their surnames. This ensures that the names appear correctly in
 % the running heads and the author index.
 %
-\author{Alexander Larionov%
-\thanks{Ok}%
-\and Artem Davydov\and Evgeny Cherkashin\and Ivan Terekhin}
+\author{Alexander Larionov\and Artem Davydov\and Evgeny Cherkashin}
 %
 %\authorrunning{Lecture Notes in Computer Science: Authors' Instructions}
 % (feature abused for this document to repeat the title also on left hand pages)
@@ -54,8 +52,11 @@
 % unless you accept that it will be published
 \institute{Irkutsk State University,
               1, Karl Marks str., Irkutsk, Russia \\
-           Institute for System Dynamics and Control Theory,
-              134, Lermontov str., Irkutsk, Russia   
+           Institute for System Dynamics and Control Theory at Siberian Branch
+              of Russian Academy of Sciences,
+              134, Lermontov str., Irkutsk, Russia\\
+           Irkutsk National Research Technical University,
+              83, Lermontov str., Irkutsk, Russia
 %\mailsa\\
 %\mailsb\\
 %\mailsc\\
@@ -110,9 +111,9 @@ If $F = \emptyset$, then the formulas have the form $\forall_XA\colon\emptyset \
 
 The set of atoms $A$ is called {\em conjunct}. The empty conjunct is identical to $true$ as it was already mentioned.
 
-Variables from $X$ are bounded by correspoding quantifiers and called $\forall$--variables and $\exists$--variables, respectively. In $\forall_XA$ a variable from $X$ that does not appear in conjunct $A$ is called {\em unconfined} variable. 
+Variables from $X$ are bounded by correspoding quantifiers and called $\forall$--variables and $\exists$--variables, respectively. In $\forall_XA$ a variable from $X$ that does not appear in conjunct $A$ is called {\em unconfined} variable.
 
-%В связи с изложенными сокращениями отметим следующий факт: 
+%В связи с изложенными сокращениями отметим следующий факт:
 $\forall \emptyset \equiv \forall \emptyset\colon\emptyset \equiv \forall true \rightarrow false \equiv false$
 
 Construction $\forall_XA$ and $\exists_XA$ are called positive typical quantifiers (TQ), because $A$ is a conjunction of only positive atoms meaned as typical condition for $X$. In practise, this constructions denote the following phrases: ``for all $X$ satisfying $A$ there is...'' or ``there exists $X$ satisfying property $A$ such that...''. For example, ``for all integer $x,y,z$ and $n>2$ there is $x^n + y^n \ne z^n$''.
@@ -129,20 +130,20 @@ Originally, the term ``typical quantifier'' was introduced by N. Bourbaki \cite{
 Let, $X$ be the set of variables, and $A$ be a conjunct.
 \begin{enumerate}
 
-\item $\exists_XA$ and $\forall_XA$ are $\exists$--PCF and $\forall$--PCF respectively. 
+\item $\exists_XA$ and $\forall_XA$ are $\exists$--PCF and $\forall$--PCF respectively.
 
 \item If $F = \{F_1,\ldots,F_n\}$ are $\forall$--PCF, then $\exists_XA\colon F$ is a $\exists$--PCF.
 
 \item If $F = \{F_1,\ldots,F_n\}$ are $\exists$--PCF, then $\forall_XA\colon F$ is a $\forall$--PCF.
 
-\item Any $\exists$--PCF or $\forall$--PCF is a PCF.  
+\item Any $\exists$--PCF or $\forall$--PCF is a PCF.
 \end{enumerate}
 \end{definition}
 
 This form of logical formulas is referred to as positively constructed formulas (PCFs), as they are written with only positive type quantifiers. The formulas contain no explicit logic negation sign. Any FOF can be represented as PCF \cite{ICDS2000}.
 %Таким образом ПО--формула есть особый вид записи классических формул языка предикатов, подобно КНФ, ДНФ и др.
 
-PCF that started from $\forall \emptyset$ is called PCF in {\em canonical form}. Any PCF can be represented in the canonical form. Let $F$ is a $\exists$--PCF, then formula 
+PCF that started from $\forall \emptyset$ is called PCF in {\em canonical form}. Any PCF can be represented in the canonical form. Let $F$ is a $\exists$--PCF, then formula
 $\forall \emptyset\colon F \equiv true \rightarrow F \equiv F$. If $F$ is a non-canonical $\forall$--PCF, then $\forall \emptyset\colon\{\exists \emptyset\colon F\} \equiv true \rightarrow \{true\&F\} \equiv F$. Typical quantifiers $\forall \emptyset$ and $\exists \emptyset$ are called {\em fictitious}, since they does not influence on truth of original PCF and does not bound any variables.  %а только лишь служат конструкциями сохраняющими корректную запись ПОФ.
 
 %Для удобства читаемости формул, будем представлять их в древовидной форме следующим образом:
@@ -161,7 +162,7 @@ Some parts of canonical PCF are named as follows:
 \begin{enumerate}
 \item PCF root $\forall \emptyset$ is called {\em PCF root};
 \item PCF root children $\exists_XA$ are called {\em PCF bases}, conjunct $A$ is called {\em base of facts}, and PCF rooted from base is called {\em base subformula};
-\item PCF bases children $\forall_YB$ are caled {\em questions} to parent base. If question is a leaf of tree then it is called {\em goal question}. 
+\item PCF bases children $\forall_YB$ are caled {\em questions} to parent base. If question is a leaf of tree then it is called {\em goal question}.
 \item subtrees of questions are called {\em consequents}. The consequent of goal question is $false$.
 \end{enumerate}
 
@@ -645,3 +646,8 @@ Fedosov, B.E.: Intelligent Control of Dynamic Systems. Moscow: Fizmatlit (2000)(
 
 
 \end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
