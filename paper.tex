@@ -37,17 +37,25 @@
 % a short form should be given in case it is too long for the running head
 \titlerunning{ATP Based on the PCF Calculus}
 
-\author{Alexander Larionov\thanks{The work was supported by Irkutsk State University, grant No 2012-01-02} \and Ivan Terehin\thanks{The work was supported by Irkutsk State University, grant No 2012-01-01} \and Evgeny Cherkashin \and Artem Davydov
-%\thanks{}
-}
-
+% the name(s) of the author(s) follow(s) next
+%
+% NB: Chinese authors should write their first names(s) in front of
+% their surnames. This ensures that the names appear correctly in
+% the running heads and the author index.
+%
+\author{Alexander Larionov%
+\thanks{Ok}%
+\and Artem Davydov\and Evgeny Cherkashin\and Ivan Terekhin}
+%
 %\authorrunning{Lecture Notes in Computer Science: Authors' Instructions}
 % (feature abused for this document to repeat the title also on left hand pages)
 
 % the affiliations are given next; don't give your e-mail address
 % unless you accept that it will be published
-\institute{Irkutsk State University,\\ Irkutsk, Karl Marks str. 1, Russia\\
-Institute of System Dynamics and Control Theory SB RAS,\\ Lermontov str. 134, Irkutsk, Russia\\
+\institute{Irkutsk State University,
+              1, Karl Marks str., Irkutsk, Russia \\
+           Institute for System Dynamics and Control Theory,
+              134, Lermontov str., Irkutsk, Russia   
 %\mailsa\\
 %\mailsb\\
 %\mailsc\\
@@ -61,8 +69,8 @@ Institute of System Dynamics and Control Theory SB RAS,\\ Lermontov str. 134, Ir
 % "llncs.dem" accompanies the document class "llncs.cls".
 %
 
-%\toctitle{Lecture Notes in Computer Science}
-%\tocauthor{Authors' Instructions}
+\toctitle{Lecture Notes in Computer Science}
+\tocauthor{Authors' Instructions}
 \maketitle
 
 
@@ -94,66 +102,74 @@ However, in this paper, we will not cover the human--orientability properties of
 %==========================BACKGROUND===================================
 %=======================================================================
 \section{Background}
+We consider the language of first-order logic consist in formulas build on atomic formulas with $\&, \vee, \neg, \rightarrow, \leftrightarrow$ operators, $\forall$ and $\exists$ quantifier symbols and constant operators $true$ and $false$. The terms term, atom, literal we define in the usual way. FOFs.
 
-%As a theoretical basis for our prover we have used the PCF calculus. Let's describe it in more details.
+Let $X = \{x_1,\ldots,x_k\}$ be the set of variables, $A = \{A_1,\ldots,A_m\}$ be the set of atomic formulas, and $F = \{F_1,\ldots,F_n\}$ be the set of some FOFs. Then the following formulas $((\forall x_1) \ldots (\forall x_k) (A_1 \& \ldots \& A_m \rightarrow (F_1 \vee \ldots \vee F_n)))$ and $((\exists x_1) \ldots (\exists x_k) (A_1 \& \ldots \& A_m \& (F_1 \& \ldots \& F_n)))$ are denoted as  $\forall_XA\colon F$ and $\exists_XA\colon F$ respectively, keeping in mind that the $\forall$--quantifier corresponds to $\rightarrow F$, where $F$ means disjunction of all formulas from $F$, and $\exists$--quantifier corresponds to $\& F$, where $F$ means conjunctions of all formulas from $F$.
 
-The PCF calculus $\boldsymbol{JF}$ is a triple $\left\langle \boldsymbol{LF}, Ax\boldsymbol{JF}, \bomega \right\rangle$, where $\boldsymbol{LF}$ is the PCF language, $Ax\boldsymbol{JF}$ is the only axiom schema and $\bomega$ is the unique inference rule of $\boldsymbol{JF}.$
+If $F = \emptyset$, then the formulas have the form $\forall_XA\colon\emptyset \equiv \forall_XA \rightarrow false$ and $\exists_XA\colon\emptyset \equiv \exists_XA \& true$, since the empty disjunction is identical to $false$, whereas the empty conjunction is identical to $true$. The form $\forall_XA$ and $\exists_XA$ are abbreviations of the [abovementioned] formulas. If $X = \emptyset$, then $\forall A\colon F$ and $\exists A\colon F$ are analogous abbreviations.
 
-%language
-\subsection{The Language of Positively Constructed Formulas}
+The set of atoms $A$ is called {\em conjunct}. The empty conjunct is identical to $true$ as it was already mentioned.
 
-Let us denote the set of all conjuncts as $Con$ and assume that a {\em conjunct} is either a finite set of usual atoms of a first-order language, or $\boldsymbol{False}$, where $\boldsymbol{False}$ satisfies the property $A \subset \boldsymbol{False} $ for any $A \in Con$. The empty conjunct is denoted by $\boldsymbol{True}$. It is clear that if $A \in Con$ then $A \cup \boldsymbol{False} = \boldsymbol{False}$. Atoms of any conjunct (except $\boldsymbol{True}$ and $\boldsymbol{False}$) may contain variables, constants and function symbols.
+Variables from $X$ are bounded by correspoding quantifiers and called $\forall$--variables and $\exists$--variables, respectively. In $\forall_XA$ a variable from $X$ that does not appear in conjunct $A$ is called {\em unconfined} variable. 
 
-\begin{definition}\label{def:1}
-Let $\bar{x}$ be a set of variables (possible empty set) and $A$ be a conjunct. Well-formed formulas of the PCF language are defined as follows:
+%В связи с изложенными сокращениями отметим следующий факт: 
+$\forall \emptyset \equiv \forall \emptyset\colon\emptyset \equiv \forall true \rightarrow false \equiv false$
 
-An expression $\exists \bar{x}\colon A$ is a $\exists$-formula; an expression $\forall \bar{x}\colon A$ is a $\forall$-formula.
+Construction $\forall_XA$ and $\exists_XA$ are called positive typical quantifiers (TQ), because $A$ is a conjunction of only positive atoms meaned as typical condition for $X$. In practise, this constructions denote the following phrases: ``for all $X$ satisfying $A$ there is...'' or ``there exists $X$ satisfying property $A$ such that...''. For example, ``for all integer $x,y,z$ and $n>2$ there is $x^n + y^n \ne z^n$''.
 
-Let $G_1,\ldots,G_k$ be a $\exists$-formulas, then $\forall$-formula is a formula of the following form: $\forall \bar{x}\colon A\left(G_1,\ldots,G_k\right)$.
+Originally, the term ``typical quantifier'' was introduced by N. Bourbaki \cite{Bourbaki} as part of notation for formalisation of mathematics. But typical quantifiers are stable in the languages of another applied fields.
 
-Let $G_1,\ldots,G_k$ be a $\forall$-formulas, then $\exists$-formula is a formula of the following form: $\exists \bar{x}\colon A\left(G_1,\ldots,G_k\right)$.
+%========================================================
+\section{The Method of PCF}
 
-\end{definition}
+\subsection{PCF Language}
 
-
-An expression is a well--formed PCF if it is constructed based on above Definition \ref{def:1} rules only.
-
-The variables from $\bar{x}$ are bound by a corresponding quantifiers, and these variables are called $\forall$-variables and $\exists$--variables correspondingly.
-
-%Any $\forall$--variable that does not occur in the corresponding conjunct is called {\em unconfined} variable.
-
-%semantic
-Let us define a semantic of PCFs by a common semantics of a corresponding first-order formula (FOF) in the classical first--order logic (FOL).
-
-\begin{definition}\label{def:semantic}
-Let $A = \{A_1,\ldots,A_l\}$ be a conjunct and $\bar{x} = \{x_1,\ldots,x_n\}$ be a set of variables. By $A^{\&}$ we denote $A_1 \&\ldots\&A_l$ and $\boldsymbol{False}^{\&}= False, \boldsymbol{True}^{\&}=True$ (propositional constants). By $F^{\text{\tiny{FOF}}}$ we denote an image of PCF formula $F$ in the FOL.
-
-%возможно убрать
-If $F= \exists \bar{x}\colon A$ then $F^{\text{\tiny{FOF}}} = \exists x_1 \ldots \exists x_n \left(A^{\&}\right).$
-%возможно убрать
-
-If $F = \forall \bar{x}\colon A$ then $F^{\text{\tiny{FOF}}} = \forall x_1 \ldots \forall x_n \left(A^{\&}\right).$
-
-If $F = \exists \bar{x}\colon A\left(G_1,\ldots,G_k\right)$ then $$F^{\text{\tiny{FOF}}} = \exists x_1 \ldots \exists x_n  \left(A^{\&} \& \left(G_{1}^{\text{\tiny{FOF}}} \& \ldots \& G_{k}^{\text{\tiny{FOF}}}\right)\right).$$
-
-If $F = \forall \bar{x}\colon A\left(G_1,\ldots,G_k\right)$ then $$F^{\text{\tiny{FOF}}} = \forall x_1 \ldots \forall x_n \left(A^{\&}\rightarrow \left(G_{1}^{\text{\tiny{FOF}}} \vee\ldots\vee G_{k}^{\text{\tiny{FOF}}}\right)\right).$$
-
-\end{definition}
-
-Any PCF can be obviously represented by a tree structure. Each node of that tree has the following form $\exists \bar{x}\colon A$ or $\forall \bar{x}\colon A$. Therefore, for readability we will represent PCF as a tree, as well as we will use corresponding terminology: node, branch, root, leaf, etc.
-%Каждый узел дерева имеет вид или $\forall\bar{x}\colon A$ or $\exists\bar{x}\colon A$. Например, в формуле вида $\forall \bar{x}\colon A\left(G_1,\ldots,G_k\right)$ корневым узлом являюется узел $\forall \bar{x}\colon A$, а его дочерние узлы это $G_1,\ldots,G_k\right$.
-
-
-If a PCF $F$ roots from the $\forall\colon\boldsymbol{True}$ node and each leaf of $F$ is a $\exists$-node then $F$ is called a PCF in the {\em canonical form}.
-It is clear, that any PCF $F$ can be converted to the canonical form by the following transformations:
+\begin{definition}[Positively--constructed formulas (PCF)]
+\label{def:pcf}
+Let, $X$ be the set of variables, and $A$ be a conjunct.
 \begin{enumerate}
-\item If $F$ is not canonical $\forall$-formula then $\forall\colon \boldsymbol{True}\left(\exists\colon \boldsymbol{True}\left(F\right)\right)$ is PCF rooted from the $\forall\colon\boldsymbol{True}$.
-\item If $F$ is $\exists$-formula then $\forall\colon \boldsymbol{True}\left(F\right)$ is PCF rooted from the $\forall\colon\boldsymbol{True}$.
-\item If $F$ has leaf $\forall \bar{x}\colon A$ then the node $\exists\colon\boldsymbol{False}$ can be added as child of this leaf.
+
+\item $\exists_XA$ and $\forall_XA$ are $\exists$--PCF and $\forall$--PCF respectively. 
+
+\item If $F = \{F_1,\ldots,F_n\}$ are $\forall$--PCF, then $\exists_XA\colon F$ is a $\exists$--PCF.
+
+\item If $F = \{F_1,\ldots,F_n\}$ are $\exists$--PCF, then $\forall_XA\colon F$ is a $\forall$--PCF.
+
+\item Any $\exists$--PCF or $\forall$--PCF is a PCF.  
+\end{enumerate}
+\end{definition}
+
+This form of logical formulas is referred to as positively constructed formulas (PCFs), as they are written with only positive type quantifiers. The formulas contain no explicit logic negation sign. Any FOF can be represented as PCF \cite{ICDS2000}.
+%Таким образом ПО--формула есть особый вид записи классических формул языка предикатов, подобно КНФ, ДНФ и др.
+
+PCF that started from $\forall \emptyset$ is called PCF in {\em canonical form}. Any PCF can be represented in the canonical form. Let $F$ is a $\exists$--PCF, then formula 
+$\forall \emptyset\colon F \equiv true \rightarrow F \equiv F$. If $F$ is a non-canonical $\forall$--PCF, then $\forall \emptyset\colon\{\exists \emptyset\colon F\} \equiv true \rightarrow \{true\&F\} \equiv F$. Typical quantifiers $\forall \emptyset$ and $\exists \emptyset$ are called {\em fictitious}, since they does not influence on truth of original PCF and does not bound any variables.  %а только лишь служат конструкциями сохраняющими корректную запись ПОФ.
+
+%Для удобства читаемости формул, будем представлять их в древовидной форме следующим образом:
+The PCFs are usually represented as a tree for more ease reading:
+$$Q_XA\colon\{F_1,\ldots,F_n\} \equiv Q_XA \left\{
+\begin{array}{lcl}
+ F_1 \\
+ \ldots \\
+ F_n
+\end{array}
+\right.,$$
+
+\noindent{} where $Q$ is a quantifier. The tree elements have conventional names: node, root, leaf, branch etc. As the quantifiers $\forall$ correspond to disjunctions of formulas $\{F_1,\ldots,F_n\}$, (quantifiers $\exists$ correspond to a conjunction), then, in a general case, all $\forall$-nodes correspond a {\em disjunctive branching}, and for $\exists$-nodes correspond to {\em conjunctive branching}.
+
+Some parts of canonical PCF are named as follows:
+\begin{enumerate}
+\item PCF root $\forall \emptyset$ is called {\em PCF root};
+\item PCF root children $\exists_XA$ are called {\em PCF bases}, conjunct $A$ is called {\em base of facts}, and PCF rooted from base is called {\em base subformula};
+\item PCF bases children $\forall_YB$ are caled {\em questions} to parent base. If question is a leaf of tree then it is called {\em goal question}. 
+\item subtrees of questions are called {\em consequents}. The consequent of goal question is $false$.
 \end{enumerate}
 
 %как правило
 In the sequel, only PCFs in the canonical form are considered.
+%----------------------
+%EXAMPLE
+%----------------------
 
 %ПО-формулы имеют древовидную структуру, а значит можно использовать соответствующую терминологию и изображать их как деревья.+++++++++++++++++++++++++
 %PCFs have a tree-like structure, therefore we can use corresponding terminology and represent PCFs as trees.
@@ -179,34 +195,33 @@ $$F^{\text{\tiny{PCF}}} = \forall\colon \boldsymbol{True}-\exists\colon\boldsymb
 %Для удобствоа мы используем символ --- для обозначения рёбер в древовидном представлении ПО-формулы. Фугрная скобка также является вспомогательным символом.+++++++++++++++++++++++++
 For convenience we use symbols ``--'' and ``\{'' for denoting the edges and branching in tree--like representation of PCF.
 
-%--------------calculus
-\subsection{The Calculus of Positively Constructed Formulas}
+\subsection{Inference rule}
 
-The axiom schema $Ax\boldsymbol{JF}$ of the PCF calculus $\boldsymbol{JF}$ has the following form:
-$$\forall\colon\boldsymbol{True}\left(\exists \bar{x}_1\colon\boldsymbol{False}\left(\widetilde{\Phi}_1\right),\ldots,\exists \bar{x}_n\colon\boldsymbol{False}\left(\widetilde{\Phi}_n\right)\right). $$
-
-In the PCF calculus to prove $F$ we attempt to refute its negation, that's why the axioms are identical to false. Thus, an inference process in the PCF calculus is a {\em refutation} process.
-
-\begin{definition}
-\label{ircond}
-Let us assume that a question $\forall \bar{y}\colon A$ to a base $\exists \bar{x}\colon B$ has an answer $\theta$  if and only if $\theta$ is a substitution $\bar{y} \rightarrow H^{\infty}$ and $A\theta \subseteq B$, where $H^{\infty}$ is Herbrand universum based on variables from $\bar{x}$, constants and function symbols that occur in corresponding base subformula.
+\begin{definition}[Answer]
+\label{answer}
+Let us assume that a question $\forall_YB:\Upsilon$ to a base $\exists_XA$ has an {\em answer} $\theta$ if and only if $\theta$ is a substitution $Y \rightarrow H^{\infty} \cup X$ and $B\theta \subseteq A$, where $H^{\infty}$ is Herbrand universe based on constans and function symbols that occur in corresponding base subformula.
 \end{definition}
 
-%The unique unary inference rule $\bomega$ is defined as follows.
-
-\begin{definition}
-If a PCF $F$ has the structure $\forall\colon\boldsymbol{True}\left(\exists \bar{x}\colon B\left(\Phi\right),\Sigma\right)$, where $\Sigma$ is a list of other base subformulas, and $\Phi$ is a list of question subformulas, that contains a question subformula $\forall \bar{y}\colon A(\exists \bar{z}_i\colon C_i\left(\Psi_i\right))_{i=\overline{1,k}}$, then a formula $\bomega F$ is an application result of the unary inference rule $\bomega$ to the question $\forall \bar{y}\colon A$ with an answer $\theta$ and $\bomega F = \forall\colon\boldsymbol{True}(\exists \bar{x} \cup \bar{z}_i\colon B \cup C_i\theta\left(\Phi \cup \Psi_i\theta\right)_{i=\overline{1,k}},\Sigma).$
+\begin{definition}[Splitting]
+\label{splitting}
+Let $F = \exists_XA\colon\Psi$, and $S = \forall_YB\colon\Upsilon$, where $\Upsilon = \{\exists_{Z_1}C_1\colon\Gamma_1,\ldots,\exists_{Z_n}C_n\colon\Gamma_n\}$ then $split(F,S) = \{\exists_{X \cup {Z_1}'} A \cup {C_1}'\colon\Psi \cup {\Gamma_1}',\ldots,\exists_{X \cup {Z_n}'} A \cup {C_n}'\colon\Psi \cup {\Gamma_n}'\}$, where $'$ is a variable renaming operator. We say that $F$ splitted by $S$. Obviously, $split(F,\forall_YB) = split(F,\forall_YB\colon\emptyset) = \emptyset$.
 \end{definition}
 
-After appropriate renaming some bound variables inside each subformula the expression $\bomega F$ will satisfy the well--formed PCF requirements. %in the canonical form requirements
+\begin{definition}[$\omega$ inference rule]
+Consider some canonical PCF $F = \forall\emptyset\colon\Phi$. Let there exists a question $Q$ that has an answer $\theta$ to appropriate base $S \in \Phi$, then $\omega F  = \forall \emptyset\colon\Phi \setminus \{S\} \cup split(S,Q\theta)$.
+\end{definition}
 
-%
-Any finite sequence of PCFs $F, \bomega F, \bomega^2 F,\ldots,\bomega^n F$, where $\bomega^n F \in Ax\boldsymbol{JF}$, is called a {\em refutation} of $F$ in the PCF calculus.
+In other words, if a question has an answer to its base, then the base subformula is splitting by this question. In the case of the goal question, we say that the basic subformula is refuted because $split(S,\forall_YB) = \emptyset$. The refuted base subformula $S$ removed from the set of base subformulas $\Phi$, since $\Phi \setminus \{S\} \cup \emptyset = \Phi \setminus \{S\}$
 
-A question with $\exists:\boldsymbol{False}$ consequent node is called {\em goal question}. If a question has disjunctive branching then answering this question results in formula {\em splitting}.
+Once refuted all bases subformulas from $\Phi$, the formula $F$ is also refuted, since $\forall \emptyset\colon\emptyset \equiv false$. %согласно правилу описанному выше
 
-For clarity consider simple example of a PCF refutation.
+%Note that the answer the questin with the disjunctive branching leads to an increase
 
+%Отметим, что ответ на вопрос с дизъюнктивным ветвлением приводит к увеличению количества базовых подформул в силу использования оператора расщепления, а опровержение базы уменьшает количество баз на одну опровергнутую.
+
+%----------------------
+%EXAMPLE
+%----------------------
 \begin{example}[A refutation in $\boldsymbol{JF}$]\label{proofexample}
 
 
