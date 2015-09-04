@@ -184,7 +184,7 @@ Let us consider a PCF representation of a FOF.
 $$F= \neg\bigl(\forall x\:\exists y P(x,y)\rightarrow \exists z P(z,z)\bigr).$$
 An image $F^{\text{\tiny{PCF}}}$ of $F$ in the PCF language is
 
-$$F^{\text{\tiny{PCF}}} = \forall\colon \boldsymbol{True}(\exists\colon\boldsymbol{True}(\forall x\colon\boldsymbol{True}(\exists y\colon P(x,y)), \forall z\colon P(z,z)(\exists\colon\boldsymbol{False}))).$$
+$$F^{\text{\tiny{PCF}}} = \forall\colon \boldsymbol{True}\{\exists\colon\boldsymbol{True}\{\forall x\colon\boldsymbol{True}\{\exists y\colon P(x,y)\}, \forall z\colon P(z,z)\{\exists\colon\boldsymbol{False}\}\}\}.$$
 %А эта ПО-формула в древовидной форме имеет следующий вид+++++++++++++++++++++++++
 The tree--like form of the above PCF is as follows:
 $$F^{\text{\tiny{PCF}}} = \forall\colon \boldsymbol{True}-\exists\colon\boldsymbol{True} \left\{
@@ -195,7 +195,7 @@ $$F^{\text{\tiny{PCF}}} = \forall\colon \boldsymbol{True}-\exists\colon\boldsymb
 \right.$$
 \end{example}
 %Для удобствоа мы используем символ --- для обозначения рёбер в древовидном представлении ПО-формулы. Фугрная скобка также является вспомогательным символом.+++++++++++++++++++++++++
-For convenience we use symbols ``--'' and ``\{'' for denoting the edges and branching in tree--like representation of PCF.
+For convenience we use symbol ``--'' to denote the adjacent edges in tree--like representation of PCF.
 
 \subsection{Inference rule}
 
