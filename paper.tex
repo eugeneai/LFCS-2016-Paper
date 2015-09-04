@@ -442,7 +442,7 @@ In addition to the OR--parallelism, parallel schemes of algorithms to search ans
 
 Scheduling threads and process on a cluster nodes must be carried out as usual according to the cluster parameters related to CPU performance and network throughput. For example, implementation of base formula refutation procedures should be bound to a process on a computing node. The same is not true for the second strategy, as is possible to degrade overall inference search efficiency by communication delays. So the refutation process in PCF having no unconfined variables are naturally scaled among cluster nodes and all the processes run independently on each other.
 
-\subsection{Memory management.}
+\subsection{Memory management}
 Allocation of memory for fixed size records is implemented by means of standard approach, which is similar to \cite{gmemory}. Array of structures is allocated with memory manager of operation system and then converted to freelists. New structures are allocated from the freelists, and released ones are returned back to the freelists. If a list is exhausted a new array is allocated from heap memory if any.
 
 In the prover for each variant of records, own array is allocated and own freelist constructed. The garbage collection is synchronized with garbage collector of the D programming language run time engine.
@@ -452,7 +452,7 @@ In the prover for each variant of records, own array is allocated and own freeli
 %==========================EXPERIMENTS==================================
 %=======================================================================
 \section{Experiments}
-Testing the developed prover was performed on problems form TPTP \cite{tptp} library version 5.4.0 (Thousands of Problems for Theorem Provers, www.tptp.org). This library is the de facto standard for testing the ATP provers. The type of problems that were chosen are the problems of FOF without equality. Total number of problems is 1221 with rating from 0.0 to 1.0. Total number of solved problems is 780. The maximal rating of solved problem is 0.62. The best results among domains presented in the Table~1.
+Testing the developed prover is being performed on problems form TPTP \cite{tptp} library version 5.4.0 (Thousands of Problems for Theorem Provers, www.tptp.org). This library is the de facto standard for testing ATP provers. The type of problems that were chosen are the problems of FOF without equality. Total number of problems is 1221 with rating from 0.0 (very easy) to 1.0 (unresolved). Total number of solved problems is 780. The maximal rating of solved problem is 0.62. The best results among domains presented in the Table~1.
 
 \begin{table}
 \caption{Domains}
@@ -505,7 +505,7 @@ SWB029+3 &  0.38 &  55.27 &  98471 \\
 
 %График...
 
-Prover shown good results for problems, whose formalization in the PCF language contains quite large conjuncts.
+Prover shown good results for problems, whose formalization in the PCF language contains large conjuncts (type conditions).
 
 \subsection{Translation from TPTP to PCF}
 TPTP contains an axiom library, which consists of different files. Formula to be investigated is collected from the files. The collection is performed with special utilities such as \texttt{tptp4X}. The collected subformulas are passed to a translator from TPTP representation to the input language of the prover. The translator is implemented with the \texttt{hotptp-yl-parser-verbose} \cite{TPTPTrans} utility that translates input TPTP--files to abstract syntax trees. Translation component of the utility is generated on the base of syntactic analysis of the current specification of TPTP. Therefore, in each case of the specification refinement, the utility can be automatically updated (recompiled). Using this approach, we are able to adopt our prover to the new input language specification.
@@ -606,7 +606,7 @@ Experiments were carried out on the logical problems which PCF--formalizations h
 %==========================CONCLUSION===================================
 %=======================================================================
 \section*{Conclusion}
-In this paper, we presented the results of the PCF calculus investigation in the context of the automatic theorem proving. The main result is a prover program implemented based on the PCF calculus. Several logical inference strategies were devised, adopted from other papers and implemented in this prover: memory sharing, lazy concretization, $k,m$--condition, parallel strategies. A special global data structure (Proof state tree) has been developed. Most of the strategies are implemented on the base of the structure.
+In this paper, we presented the results of the positively constructed formulas (PCF) calculus investigation in the context of the automatic theorem proving. The main result is a prover program implemented based on the PCF calculus. Several logical inference strategies were devised, adopted from other papers and implemented in this prover: memory sharing, lazy concretization, $k,m$--condition, parallel strategies. A special global data structure (proof state tree) has been developed. Most of the strategies are implemented on the base of the structure.
 
 Testing our prover has been carried out on problems from TPTP library. Testing has shown that the PCF calculus is suitable for automated theorem proving and some problems are solved more efficiently than other provers. The classes of problems, which are the most suitable for our system, are described.
 
