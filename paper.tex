@@ -197,27 +197,29 @@ $$F^{\text{\tiny{PCF}}} = \forall\colon \boldsymbol{True}-\exists\colon\boldsymb
 %Для удобствоа мы используем символ --- для обозначения рёбер в древовидном представлении ПО-формулы. Фугрная скобка также является вспомогательным символом.+++++++++++++++++++++++++
 For convenience we use symbol ``--'' to denote the adjacent edges in tree--like representation of PCF.
 
-\subsection{Inference rule}
+\subsection{The Inference rule}
 
 \begin{definition}[Answer]
 \label{answer}
-Let us assume that a question $\forall_YB:\Upsilon$ to a base $\exists_XA$ has an {\em answer} $\theta$ if and only if $\theta$ is a substitution $Y \rightarrow H^{\infty} \cup X$ and $B\theta \subseteq A$, where $H^{\infty}$ is Herbrand universe based on constans and function symbols that occur in corresponding base subformula.
+A question $\forall_YD:\Upsilon$ to a base $\exists_XA$ has an {\em answer} $\theta$ if and only if $\theta$ is a substitution $Y \rightarrow H^{\infty} \cup X$ and $D\theta \subseteq A$, where $H^{\infty}$ is Herbrand universe based on constans and function symbols that occur in corresponding base subformula.
 \end{definition}
 
 \begin{definition}[Splitting]
 \label{splitting}
-Let $F = \exists_XA\colon\Psi$, and $S = \forall_YB\colon\Upsilon$, where $\Upsilon = \{\exists_{Z_1}C_1\colon\Gamma_1,\ldots,\exists_{Z_n}C_n\colon\Gamma_n\}$ then $split(F,S) = \{\exists_{X \cup {Z_1}'} A \cup {C_1}'\colon\Psi \cup {\Gamma_1}',\ldots,\exists_{X \cup {Z_n}'} A \cup {C_n}'\colon\Psi \cup {\Gamma_n}'\}$, where $'$ is a variable renaming operator. We say that $F$ splitted by $S$. Obviously, $split(F,\forall_YB) = split(F,\forall_YB\colon\emptyset) = \emptyset$.
+Let $B = \exists_XA\colon\Psi$, and $Q = \forall_YD\colon\Upsilon$, where $\Upsilon = \{\exists_{Z_1}C_1\colon\Gamma_1,\ldots,\exists_{Z_n}C_n\colon\Gamma_n\}$ then $split(B,Q) = \{\exists_{X \cup {Z_1}'} A \cup {C_1}'\colon\Psi \cup {\Gamma_1}',\ldots,\exists_{X \cup {Z_n}'} A \cup {C_n}'\colon\Psi \cup {\Gamma_n}'\}$, where $'$ is a variable renaming operator. We say that $B$ is split by $Q$. Obviously, $split(B,\forall_YD) = split(B,\forall_YD\colon\emptyset) = \emptyset$.
 \end{definition}
 
-\begin{definition}[$\omega$ inference rule]
-Consider some canonical PCF $F = \forall\emptyset\colon\Phi$. Let there exists a question $Q$ that has an answer $\theta$ to appropriate base $S \in \Phi$, then $\omega F  = \forall \emptyset\colon\Phi \setminus \{S\} \cup split(S,Q\theta)$.
+\begin{definition}[the inference rule $\bomega$]
+Consider some canonical PCF $F = \forall\emptyset\colon\Phi$. Let there exists a question $Q$ that has an answer $\theta$ to appropriate base $B \in \Phi$, then $\omega F  = \forall \emptyset\colon\Phi \setminus \{B\} \cup split(B,Q\theta)$.
 \end{definition}
 
-In other words, if a question has an answer to its base, then the base subformula is splitting by this question. In the case of the goal question, we say that the basic subformula is refuted because $split(S,\forall_YB) = \emptyset$. The refuted base subformula $S$ removed from the set of base subformulas $\Phi$, since $\Phi \setminus \{S\} \cup \emptyset = \Phi \setminus \{S\}$
+In other words, if a question has an answer to its base, then the base subformula is split by this question.  In the case of a goal question, we say that the basic subformula is refuted because $split(B,\forall_YD) = \emptyset$. The refuted base subformula $B$ removed from the set of base subformulas $\Phi$, since $\Phi \setminus \{S\} \cup \emptyset = \Phi \setminus \{S\}$
 
-Once refuted all bases subformulas from $\Phi$, the formula $F$ is also refuted, since $\forall \emptyset\colon\emptyset \equiv false$. %согласно правилу описанному выше
+As soon as all the bases subformulas from $\Phi$ have been refuted, the formula $F$ is also refuted, since $\forall \emptyset\colon\emptyset \equiv false$.  The PCF language and the inference rule $\bomega$ form the calculus $\boldsymbol{JF}$ oriented to refutation of a negation of an original formula.  The only $\boldsymbol{JF}$--axiom is $\forall \emptyset\colon\emptyset$, i.e., \emph{false}.
 
-%Note that the answer the questin with the disjunctive branching leads to an increase
+%согласно правилу описанному выше
+
+%Note that the answer the question with the disjunctive branching leads to an increase
 
 %Отметим, что ответ на вопрос с дизъюнктивным ветвлением приводит к увеличению количества базовых подформул в силу использования оператора расщепления, а опровержение базы уменьшает количество баз на одну опровергнутую.
 
@@ -228,7 +230,7 @@ Once refuted all bases subformulas from $\Phi$, the formula $F$ is also refuted,
 
 
 \begin{equation*}\label{ex:f1}
-  F_1 = \forall\colon\boldsymbol{True} - \exists\colon S(e)(Q_1,Q_2,Q_3,Q_4);
+  F_1 = \forall\colon\boldsymbol{True} - \exists\colon S(e)\{Q_1,Q_2,Q_3,Q_4\};
 \end{equation*}
 \begin{equation*}
   \begin{array}{l}
@@ -244,11 +246,11 @@ Once refuted all bases subformulas from $\Phi$, the formula $F$ is also refuted,
   \end{array}\right.
   \end{array}
 \end{equation*}
-At the first step only one answer $\{x \rightarrow e\}$ to question $Q_1$ exists. After applying rule $\bomega$ with this answer, formula will be in the following form:
+At the first step there is only one answer $\{x \rightarrow e\}$ to question $Q_1$. After applying rule $\bomega$ with this answer to the only base $F_1$, the formula will be converted to the following form:
 \begin{equation*}\label{ex:f2}
-  F_2 = \forall\colon\boldsymbol{True} - \exists\colon S(e),A(a)(Q_1,Q_2,Q_3,Q_4).
+  F_2 = \forall\colon\boldsymbol{True} - \exists\colon S(e),A(a)\{Q_1,Q_2,Q_3,Q_4\}.
 \end{equation*}
-At the second step also only one answer $\{x \rightarrow a\}$ to  question $Q_4$ exists. After applying $\bomega$ with this answer, formula is split, because $Q_4$ has disjunctive branching. And now formula has the following form:
+At the second step there is also only one answer $\{x \rightarrow a\}$ to question $Q_4$. After applying $\bomega$ with this answer, formula is split, because $Q_4$ has disjunctive branching. The formula will have the following form:
 
 \begin{equation*}\label{ex:f3}
 F_3 =
@@ -269,9 +271,9 @@ F_3 =
 \end{array}\right.
 \end{equation*}
 
-At the third step first base can be refuted by answering on $Q_3$ goal question with $\{x \rightarrow y_1; y \rightarrow a\}$. Refuted base (base subformula) can be deleted from the list of base subformulas.
+At the third step the first base can be refuted by answering on $Q_3$ (goal question) with $\{x \rightarrow y_1; y \rightarrow a\}$.  The refuted base (and its whole base subformula) is to be deleted from the list of base subformulas.
 
-At the fourth step the answer $\{z \rightarrow a\}$ to fifth new question exists. And now formula has the following form:
+At the fourth step there is the answer $\{z \rightarrow a\}$ to fifth new question.  The formula will be of the following form:
 \begin{equation*}\label{ex:f5}
   F_4 = \forall\colon\boldsymbol{True} - \exists\colon S(e),A(a), C(a),D(f(a))
   \left\lbrace
@@ -281,9 +283,9 @@ At the fourth step the answer $\{z \rightarrow a\}$ to fifth new question exists
   \end{array}\right.
 \end{equation*}
 
-At the fifth step the only base can be refuted by answering on $Q_4$ goal question with  answer $\{x \rightarrow a; y \rightarrow f(a)\}$.
+At the fifth step the only base can be refuted by answering on $Q_4$ (goal question) with  answer $\{x \rightarrow a; y \rightarrow f(a)\}$.
 
-The refutation is finished because all bases were refuted.
+The refutation is finished because all the bases were refuted.
 
 \end{example}
 
@@ -295,79 +297,78 @@ The refutation is finished because all bases were refuted.
 
 \subsection{Implementation language}
 
-Our prover is implemented in the D programming language \cite{DPL1,DPL2}. The D programming language has many features: compiler produce a native binary code, which both fast and optimized; procedures of memory management are manually adjustable, but it is also possible to use garbage collection; there is a good library for parallel computation construction in Erlang--like model, which is generally recognized as the quite good \cite{Erlang1}.
+Our prover is implemented in the D programming language \cite{DPL1,DPL2}. The language has many convenient features: compiler produce a native binary code, which both fast executed and optimized by its compiler; memory management is manually adjustable, but it is also possible to use adjustable garbage collection techniques implemented in translator; there is a good library for parallel computation construction in the image and likeness of Erlang, which is generally recognized as the reasonably good \cite{Erlang1}.
 
 \subsection{Proof State Tree}
 
 %---------
 %One of the basic components of our prover implementation is a proof states tree (PST).
 
-Each step of the inference in the PCF calculus can be considered as an addition of corresponding consequent subformulas to the base subformula (facts to a base; questions to a question lists). Thus, a formula is usually monotonically increasing, and splitting if a disjunctive branching happens.
+Each step of the inference in the PCF calculus can be considered as addition of special cases of corresponding consequent subformulas to the base subformula (facts to a base; questions to a question sets). Thus, a formula size will monotonically increase due to splitting of disjunctive branching.
 %---------
 
-One of the main tools of the logical inference search implementation in the developed prover is the \emph{proof state tree} (PST), which is built with the data structures based on so--called chunks described below. The PST structures are used to store the sequence of the steps of logical inference. Each step corresponds to a single operation that were performed. PST also represents the current state of the formula under refutation. The main purpose of PST is to strictly fix all operations and their parameters, which occurs on every step of logical inference construction. The example of such operation is the fact of applying a substitution in a base subformula to a question.
+One of the main tools of the logical inference search implementation of the developed prover is the \emph{proof state tree} (PST) data structure.  PST is constructed from so--called chunk data structures described below. The PST is used to store the sequence of the steps of a logical inference. Each step corresponds to a single operation that were performed. PST also represents the current state of the formula under refutation. The main purpose of PST is to strictly fix all performed operations and their parameters, which are accompanied every step of logical inference construction. An application of a substitution in a base subformula to a question is an example of such operation.
 
 %--------------------------------------------------------------------------------
-\subsubsection{Chunk.}
-Chunk is a single--linked list of elements with type {\tt T} which have not only reference to the \texttt{first} and \texttt{last} elements of that list. A chunk is empty, if it does not contain any elements, and \texttt{first} and \texttt{last} elements are NULL--references. We say, that chunk $C_1$ is \emph{linked} with chunk $C_2$ \emph {from the left}, if the \texttt{last} node of chunk $C_1$ is referring to the \texttt{first} node of chunk $C_2$ and, simultaneously, $C_2$ linked with $C_1$ \emph{from the right}. For this operation a procedure of linking {\tt void link(Chunk!(T) c)} is defined, which links current chunk and chunk {\tt c} from left. If the chunks are not empty, then linking is proceeded according to the definition. If one of the chunks is empty, then its \texttt{first} and \texttt{last} elements will be assigned to the value of the linking element. Note, that several chunks can be linked with different chunk from one of its sides simultaneously. Therefore, using the procedure of linking one can build a tree of chunks, which grows from leafs.
+\subsubsection{The chunk data structure.}
+The \emph{chunk} is a single--linked list of elements of type {\tt T}. The \texttt{first} and the \texttt{last} elements of the list are distinguished.  A chunk is empty, if it does not contain any elements, and \texttt{first} and \texttt{last} elements are NULL--references. We say, that chunk $C_1$ is \emph{linked} to chunk $C_2$ \emph {from the left hand}, if the \texttt{last} node of chunk $C_1$ is referring to the \texttt{first} node of chunk $C_2$, the linking ``\emph{from the right hand}'' is similar. Linking operations are implemented in D--language procedure {\tt void link(Chunk!(T) c)}, which links current chunk and chunk {\tt c} from left. If the chunks are not empty, then linking is made according to the definition. If one of the chunks is empty, then its \texttt{first} and \texttt{last} elements will be assigned to the value of the linking element. Note, that several chunks can be linked with the same chunk from the same side simultaneously. Therefore, one can build a tree of chunks growing from leafs.
 
 %With the chunks we can organize main storage of information of PCF and the states of logical inference.
 
-In Fig.~\ref{fig:chunk1} an example of structure is presented, which is built from chunks.
+In Fig.~\ref{fig:chunk1} an example of a structure is presented, which is built from chunks.
 \begin{figure}[h]
   \vspace{0.5cm}
   \centering
   \includegraphics[width=0.6\linewidth]{img/ChunkFullp1.eps}
-  \caption{Chunks}
+  \caption{An usage of chunk data structures}
   \label{fig:chunk1}
 \end{figure}
-There are five chunks in this figure, and several of them are linked together with \texttt{first} field: ``5'' and ``4'', ``4'' and ``3'', ``3'' and ``1'', ``2'' and ``1''. Chunk 4 is empty. \texttt{first} and \texttt{last} is the first and last nodes of chunks. Numbers are the identifiers of the corresponding nodes. Empty chunk duplicates node \texttt{first} for the node linked with empty chunk from the left.
+There are five chunks in this figure, and several of them are linked together with \texttt{first} element: ``5'' and ``4'', ``4'' and ``3'', ``3'' and ``1'', ``2'' and ``1''. Chunk 4 is empty. Numbers are the identifiers of the corresponding nodes. Empty chunk duplicates node \texttt{first} of its left hand linked node.
 
 
 %---------------------
 \subsubsection{Proof state tree.}
-A proof state tree is a tree with the following properties: the root is the original PCF, other nodes are consequent subformulas (with the answer applied to them and variables renamed). In addition, the nodes contain some system information like step of inference, answer, etc. Thus, the number of the leafs is the current number of the bases, and at current inference step a PCF is denoted by the path from the leaf to the PST root. This approach allows us to rollback (backtrack) the inference search process, observe proof states and share references among terms and formulas. If a base is refuted then its memory can be released by deleting of the path from corresponding leaf to the soonest branching.
+A proof state tree (PST) is a tree structure of the following properties: the root is the original PCF, other nodes are consequent subformulas (with its answer applied and variables renamed). In addition, the nodes contain some system information like step of inference, answer, etc. Thus, the number of the leafs of the PST is the current number of the bases, and at current inference step, a PCF is denoted by the path from the leaf to the PST root. This approach allows us to rollback (backtrack) the inference search process, observe proof states and share references among terms and formulas. If a base is refuted then its structures can be released by deleting the path from corresponding leaf to the nearest branching.
 
-Every node of PST is a chunk. The growth of the tree is a linking of new chunks with the existing leafs of the tree from the left.
+Every node of a PST is a chunk. The growth of the tree is a linking of new chunks with the existing leafs of the tree from the left hand.
 
 PST for the formula from Example \ref{proofexample} is represented in Fig.~\ref{fig:pst}.
-PST root is an original PCF $F_1$. Node ``2'' is a  $Q_1$ question consequent $\exists\colon A(a)$, and the path from node ``2'' to the root node corresponds to PCF $F_2$. Nodes ``3'' and ``4'' are corresponding consequents for $Q_4$. The path from node ``3'' to the root node and the path from node ``4'' to the root node correspond to base subformulas for PCF $F_3$. For example, formulas that are denoted by paths ``5''--``1'' and ``3''--``1'' share data that are represented by nodes ``1''--``2''. When base subformula that is represented by path ``3''--``1'' is refuted, we can delete path from node ``3'' to soonest branching --- in this case only node ``3'' is deleted, because nodes ``2''--``1'' are still used for representing another base subformulas.
+PST root is an original PCF $F_1$. Node ``2'' is a  $Q_1$ question consequent $\exists\colon A(a)$, and the path from node ``2'' to the root node corresponds to PCF $F_2$. Nodes ``3'' and ``4'' are corresponding consequents for $Q_4$. The path from node ``3'' to the root node and the path from node ``4'' to the root node correspond to base subformulas for PCF $F_3$. For example, formulas that are denoted by paths ``5''--``1'' and ``3''--``1'' share data that are represented by nodes ``1''--``2''. When base subformula that is represented by path ``3''--``1'' is refuted, we can delete path from node ``3'' to the nearest branching. In this case only node ``3'' is deleted because nodes ``2''--``1'' are still used for representing another base subformulas.
 %The lettering in figures should have a height of 2mm (10-point type)
 %caption UNDER the figures
 \begin{figure}[h]
   %\vspace{0.5cm}
   \centering
   \includegraphics[width=0.4\linewidth]{img/PSTp1.eps}
-  \caption{Proof state tree for PCF from Example \ref{proofexample}.}
+  \caption{Proof state tree for PCF from Example \ref{proofexample}}
   \label{fig:pst}
 \end{figure}
 
 %---------------------
 \subsubsection{Data sharing: sharing of base subformulas.}
 %------
-In addition, in a PST the data--sharing (memory sharing) is implemented: if two base subformulas are characterized by the corresponding paths, their bases share data, which are represented by the same part of these paths.
+The PST structure allow to implement the memory data sharing: if base subformulas have common PST paths, their bases share elements of type conditions and sets of questions (Fig.~\ref{fig:datasharing1}).
 \begin{figure}[h]
   \vspace{0.5cm}
   \centering
   \includegraphics[width=0.4\linewidth]{img/Graphsp1.eps}
-  \caption{Example of proof state tree for base subformula refutation}
+  \caption{Memory data sharing}
   \label{fig:datasharing1}
 \end{figure}
 
-If a PCF contains a question with disjunctive branching, then its base subformula will be divided into several new base subformulas during the searching procedure of the logical inference. The number of new subformulas corresponds to the number of disjunctive subformulas in the consequent of the question. In the straightforward variant of the prover implementation, the sharing will require copying previous state of the original formula more than once; this copying have a linear complexity, but it leads to the redundant expenses of memory and processor time. PST allows one to implement sharing the common subbranches. Let's we have the following base subformula:
+If a PCF contains a question with disjunctive branching, then its base subformula will be divided into several new base subformulas during searching procedure of the logical inference. The number of new subformulas corresponds to the number of disjunctive subformulas in the consequent of the question. In a straightforward variant of the prover implementation, the sharing will require copying previous state of the original formula more than once; this copying have a linear complexity, and it leads to the redundant expenses of memory and processor time. PST allows us to implement common subbranches sharing instead of copying. Let's consider the following base subformula:
 $$\exists: A(a) - \forall x: A(x) - \left\{
 \begin{array}{lcl}
  \exists \colon B(x) & - & \forall y: B(y) - \exists\colon\boldsymbol{False}\\
- \exists \colon C(x) & - & \forall y: C(y) - \exists\colon\boldsymbol{False}
+ \exists \colon C(x) & - & \forall y: C(y) - \exists\colon\boldsymbol{False}.
 \end{array}
 \right. $$
-
-Note, that the formula has disjunctive branching and it is deep. PST for the refutation of this base subformula is presented on Fig.~\ref{fig:datasharing2}
+The formula has disjunctive branching and it is deep. PST for the refutation of this base subformula is presented in Fig.~\ref{fig:datasharing2}.
 \begin{figure}[h]
   \vspace{0.5cm}
   \centering
   \includegraphics[width=0.82\linewidth]{img/DataSharing2p1.eps}
-  \caption{Example of proof state tree for base subformula refutation}
+  \caption{Example of PST for a base subformula refutation}
   \label{fig:datasharing2}
 \end{figure}
 
@@ -376,15 +377,17 @@ Note, that the formula has disjunctive branching and it is deep. PST for the ref
 
 %====================================================================================
 %====================================================================================
-\subsection{Lazy concretization}
+\subsection{Lazy instantiation}
 
-By the Definition~3 the inference rule $\omega$ can be applied if the question $\forall \bar{y}\colon A$ to base $\exists \bar{x}\colon B$ has an answer $\theta$, such that $\theta$ is a substitution $\bar{y} \rightarrow H^{\infty}$ and $A\theta \subseteq B$. If all the variables in the $\bar{y}$ are occurred in $A$, then the search of corresponding elements from $H^{\infty}$ is carried on by the algorithm of subsumption and depends on only corresponding base of facts, hence the conditions of sets subsumptions need to be satisfied. If a variable in the $\bar{y}$ is not occurred in $A$ then the variable is called {\emph unconfined variable} and it is not used in a subsumption. However, we need to find a substitution for these variables as well, and any element of Herbrand universum is a correct substitution. The problem with Herbrand universum is that in the general case, it is an unlimited set and it is not known what element should be taken as a substitution.
+According to the Definition~3, the inference rule $\omega$ can be applied if a question $\forall \bar{y}\colon A$ to a base $\exists \bar{x}\colon B$ has an answer $\theta$, such that $\theta$ is a substitution $\bar{y} \rightarrow H^{\infty}$ and $A\theta \subseteq B$. If all the variables in $\bar{y}$ are occurred in $A$, then the search of corresponding elements from $H^{\infty}$ is carried on by the algorithm of subsumption among corresponding base of facts, since the conditions of subsumption of the sets have to be satisfied. If a variable in the $\bar{y}$ is not occurred in $A$ then the variable is called \emph{unconfined variable} and it is not used in a subsumption. However, we need to find a substitution for these variables as well.  Each of the elements of Herbrand universe is a correct substitution for the unconfined variable. This rises a problem related to Herbrand universe. In the general case the universe is an unlimited set, and it is not known what element should be taken as a substitution for the variable.
 
-The main concept of lazy concretization is as follows. Instead of selection of a concrete element of the Herbrand universum for a substitution of an unconfined variable an {\em unspecified Herbrand element} (UHE) is used temporally. The UHE will be concretized further to a proper term. Such concretization is based on the logical inference requirements. UHE will be concretized to a ground term, or in some situations, it will remain unconcretized. In such case, the required terms provide the possibility of answering to the question: UHE is gradually concretized in such way, that on every step of inference we can build new answer for some question. Simultaneously the following problem is being solved: to what term we need to concretize UHE to make it possible to answer the question? Note, that originally UHE appears as a part of answer in one question and its concretization is done while searching the answers for other questions. As ``gradually concretization'' we mean procedure of lazy computations: UHE concretized as precise, as it is enough for answering the current question, i.e. concretization, generally, is partial, for example UHE for $h$ is concretized to $f(h_1)$, where $h_1$ is a new UHE.
+The main concept of lazy instantiation is as follows. Instead of selecting a concrete element of a Herbrand universum for a substitution of an unconfined variable an {\em unspecified Herbrand element} (UHE) is used temporally. The UHE will be concretized further to a proper term. The result of the concertizing depends on the logical inference strategy. UHE will be instantiated to a ground term, or in some situations, it could remain unbound.
 
-By it's nature UHE is similar to unconcretized $\forall$-variable in the sense that it is mutable, i.e. it is potentially concretized, however all such changes must be directed only to concretization of UHE, i.e. UHE is substituted only to some term or to different UHE, but not to the variable.
+The UHE can be concretized in a term, containing other UHEs. The variant of the concretizing on the each step is chosen according to inference strategies to make refutation possible, e.g. by analyzing a term structure of a question.  The process is organized in a trendy ``lazy'' manner: UHE is instantiate as concrete, as it is enough for answering a question, i.e. instantiation is generally partial, for example UHE for $h$ is concretized to $f(h_1)$, where $h_1$ is a new UHE.
 
-Let's consider the example of this technique in process of building the logical inference for the following formula.
+UHE by nature is similar to unconcretized $\forall$-variable in the sense that it is mutable, i.e., it is potentially concretized, however all such changes must be aimed at instantiation of  UHE, i.e. UHE can be substituted only to a term or to other UHE, but not to a variable.
+
+Let's consider an example of the technique application in building a logical inference for the following formula.
 \begin{equation*}
   \forall\colon\boldsymbol{True} - \exists\colon\boldsymbol{True} -
   \left\lbrace
@@ -395,38 +398,35 @@ Let's consider the example of this technique in process of building the logical 
   \end{array}\right.
 \end{equation*}
 
-At the first step an answer $\{x \rightarrow h_1\}$ to the first question exists, $x$ is an unconfined variable and $h_1$ is an unspecified Herbrand element. After this step the atom $A(h_1)$ is added to the base. At the second step an answer $\{x \rightarrow h_2\}$ to the second question exists and $h_1$ is concretized to $f(h_2)$, after this step $B(f(h_2))$ is added to the base. Finally, at the third step the trivial (empty) answer exists to the third question and $h_2$ is concretized to $a$.
+At the first step there is an answer $\{x \rightarrow h_1\}$ to the first questions, $x$ is an unconfined variable and $h_1$ is an unspecified Herbrand element. After this step atom $A(h_1)$ is added to the base. At the second step there is an answer $\{x \rightarrow h_2\}$ to the second question and $h_1$ is instantiated to $f(h_2)$, after this step $B(f(h_2))$ is added to the base. Finally, at the third step the trivial (empty) answer exists to the third question and $h_2$ is concretized to $a$.
 
-For efficiency increase in this strategy, we are using two constraints.
+To improve the search efficiency of the strategy, we use two constraints.
 
 %Для стртегии ленивой конкретизации предложено два типа ограничений
 \subsubsection{Constraint~1: Limit of concretizations number.}
 %Ограничение количества конкретизаций.
 
 %---
-Two UHEs are \emph{similar}, if they appear as the result of a substitution for the same unconfined variable. This situation appears if for a question with unconfined variables a sequence of answers were constructed, such that on every step of the sequence new UHE created as a substitution. A constraint for the similar UHE--concretizations excludes such situations, when UHE is concretized on a step, where it is not necessary, and, consequently, an opportunity to concretize it appears on other step. For every UHE a reference to the unconfined variable is stored, which the UHE was selected as a substitution for. The set of terms, which concretized a unconfined variable through its UHE, is stored in the corresponding question. The engine allows tracking the UHE concretization. If a predefined limit of the concretizations is exceeded then all further concretizations are denied. The limit is chosen by user using additional information about the problem under investigation, or it is taken as $1$, and increased after an unsuccessfull logical inference, then the inference attempt is repeated.
+Two UHEs are \emph{similar}, if they were generated as the result of a substitution for the same unconfined variable. This situation appears if for a question with unconfined variables a sequence of a similar answers were constructed, such that on every step of the sequence new UHE created as a substitution. The constraint for the similar UHE--concretizations excludes the possibilities of generation of new UHE when it is not necessary. For every UHE a reference to its unconfined variable (that resulted to the USE production) is stored. The set of terms, which concretized an unconfined variable through its UHE, is stored in questions. The engine allows tracking the UHE concretization. If a predefined limit of the concretizations is exceeded then all further concretizations rejected. The limit is chosen by user according to a specific and features of the problem under investigation, or it is denoted as $1$, and increased after an unsuccessfull logical inference, then the inference attempt is repeated.
 
 \subsubsection{Constraint~2: Storing expressions which contain UHE.}
 %Сохранение выражений, содержащих НЭЭ
 
-For a question with unconfined variables, one can apply all available answers, i.e. with using all elements of Herbrand universum. It is known, that this is not technically possible because of unlimited Herbrand universum. So, the technique of lazy computations is used. In ideal case, all answers for question is used simultaneously, but actually only the required questions are used. For example, if in a some formula $\forall x: True  - \exists A(x)$, and $H^{\infty}= \{a, f(a), f(f(a)), ...\}$ then usage of all available questions simultaneously leads to addition of $\{A(a), A(f(a)), A(f(f(a))), ...\}$ elements (amount is unlimited) to the base. Instead, this set is associated with the element $A(h)$, where $h$ is UHE, and this element generate required elements of $H^{\infty}$ set in further.
-
-In such case, one can find a similarity with lazy concretization strategy without constraints. The advantage of the approach with storing expressions, which contain UHE, is that the expression with UHE is always stored, i.e. it is not possible to lose it by applying some substitutions.
+Another UHE--approach to process unconfined variables is based on storing in an UHE original type condition that contained the variable.  Later it could be used as a constrain for possible substitution value from $H^{\infty}$ acceptable to form an answer. This is a form of lazy computation of other form as compared to lazy concretizing, but instead of sequential concretizing the USE instantiates by a term from a set $H^{\infty}$. The installation is stored in UHE. If the UHE can be instantiated in a new value from $H^{\infty}$, it does, and the value also stored in UHE. So we can count values one by one and prohibit repeating.
 
 
 %====================================================================================
 %-----------------k,m,-condition-----------------
-\subsection{Strategy ``k,m-condition"}
+\subsection{Strategy of ``$\boldsymbol{k,m}$-constraint"}
 An answer to a question is accepted if at some point of the following $k$ steps of its inference a certain condition becomes true at least $m$ times. This strategy is used in the following cases.
 
-\subsubsection{$k,m$--refutation.} An answer to a question with disjunctive branching is accepted if in next $k$ steps at least $m$ generated bases were refuted, otherwise the process restarted with a new answer. This strategy allows us to constrain highly spawning inferences by means of control answering questions with disjunctive branching.
+\subsubsection{$\boldsymbol{k,m}$--refutation.} An answer to a question with disjunctive branching is accepted if in next $k$ steps at least $m$ generated bases were refuted, otherwise the process restarted with a new answer. This strategy allows us to constrain highly spawning inferences by means of control answering questions with disjunctive branching.
 
-\subsubsection{$k$--unrefutation.}
-For a question with disjunctive branching an answer is accepted if during next $k$ steps no refutation for the base subformula was achieved, using the questions without disjunctive branching. This strategy, as it is in the previous variant, reduces growth of a formula due to answering questions with disjunctive branching. If no refutation can be constructed using this strategy, then answering to the questions allowed. The parameter $m$ is dropped in that case.
+\subsubsection{$\boldsymbol{k}$--unrefutation.}
+For a question with disjunctive branching an answer is accepted if during next $k$ steps no refutation for the base subformula was achieved, using the questions without disjunctive branching. This strategy, as it is in the previous variant, reduces growth of a formula due to answering questions with disjunctive branching. If no refutation can be constructed using this strategy, then answering to the questions allowed.
 
-\subsubsection{$k,m$--concretization.}
-An answer for a question is accepted if during next $k$ steps at least $m$ UHE are concretized. This strategy is also aimed at limiting a complexity of the formula. Large amounts of additional information and conditions are associated with unconcretized UHE. After an UHE is concretized, the associations are released. So as soon we process the UHE as soon we will take advantage of additional memory.
-
+\subsubsection{$\boldsymbol{k,m}$--concretization.}
+An answer for a question is accepted if during next $k$ steps at least $m$ UHE are concretized. This strategy is also aimed at limiting a complexity of the formula. Large amounts of additional information and conditions are associated with unconcretized UHE. After an UHE is concretized, the associations are released. As soon we instantiate the UHE as soon we will take advantage of additional memory.
 
 %====================================================================================
 %Parallel strategy
