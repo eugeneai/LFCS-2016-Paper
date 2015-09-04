@@ -430,23 +430,22 @@ An answer for a question is accepted if during next $k$ steps at least $m$ UHE a
 
 %====================================================================================
 %Parallel strategy
-\subsection{Parallel strategy}
+\subsection{Strategy of parallel inference}
 
 Let's consider techniques and strategies for parallel implementations of logical inference algorithms in the PCF calculus.
 
-\subsubsection{First parallel strategy.}
-If a question has disjunctive branching then, after we have answered that question, the formula will splits and transforms to the formula with number of bases equals to the number of answered question consequents, i.e. in general case the number of the base subformulas is increasing on every step of logical inference. In addition, the original formalization of a problem in PCF language can contain more than one base subformula. In order to refute the original PCF formula every base need to be refuted. The refutation of the base subformulas can be processed in parallel, i.e., the refutation of each base is processed in an independent thread. This is possible if the bases are independent from each other, i.e. they don't share $\forall$--variables and UHEs. Bases never share $\forall$--variables because bases don't contain $\forall$--variables at all (by definitions), as they contain only ground terms. However, bases can share the UHEs in case of usage of the lazy concretization strategy. Therefore, this strategy can be applied in case if the lazy concretization strategy is not used. According to the above described features of PCF we say, that PCF have property called ``OR--parallelism''.
+\subsubsection{Independent asynchronous refutation of bases.}
+If a question has disjunctive branching then, after we have answered that question, the formula will splits and transforms to the formula with a set of bases according to the set of answered question consequents, i.e. in general case the number of the base subformulas is increasing in every step of logical inference. In addition, the original formalization of a problem in PCF language can contain more than one base subformulas. In order to refute the original PCF formula every base need to be refuted. The refutation of the base subformulas can be processed in parallel in an independent thread. This is possible if the bases are independent from each other, i.e. they don't share $\forall$--variables and UHEs. Bases never share $\forall$--variables because bases don't contain $\forall$--variables at all (by definitions), as they contain only ground terms. However, bases can share the UHEs in case of usage of the lazy concretization strategy. Therefore, this strategy can be applied in case if the lazy concretization strategy is not used. According to features of PCF, the PCF have property called ``OR--parallelism''.
 
-\subsubsection{Second parallel strategy.}
-In addition to the OR--parallelism, parallel schemes of algorithms for searching answers for each questions can be constructed. Since the questions do not share variables, as in previous strategy, the answer search procedure can be performed also in an individual computation thread. In addition, like in the previous strategy, second parallel strategy formulated as follows: each answer search procedure to a question is independent of other questions.
+\subsubsection{Parallel answer search.}
+In addition to the OR--parallelism, parallel schemes of algorithms to search answers for each questions can be constructed. Since the questions do not share variables, as in previous strategy, the answer search procedure can be performed also in an individual computation thread. In addition, like in the previous strategy, second parallel strategy formulated as follows: each answer search procedure to a question is independent of other questions.
 
-\subsubsection{Recomendation.}
-One recommendation for an implementation of the described algorithms on cluster computing systems can be given: there is a problem to divide tasks between computing nodes depending on connection speed between the nodes. For example, implementation of the first strategy must bind process to the computing node. Binding the process to the computing node in case of second strategy is possible with increasing the conjunct of question and increasing the set of substitutions corresponding to the every atom of question. Otherwise, communication expenses can override the time of computation and will degrade the overall result.
+Scheduling threads and process on a cluster nodes must be carried out as usual according to the cluster parameters related to CPU performance and network throughput. For example, implementation of base formula refutation procedures should be bound to a process on a computing node. The same is not true for the second strategy, as is possible to degrade overall inference search efficiency by communication delays. So the refutation process in PCF having no unconfined variables are naturally scaled among cluster nodes and all the processes run independently on each other.
 
-\subsection{Memory manager}
-Allocation of memory for fixed size records is implemented based on standard approach, which is similar to \cite{gmemory}. Array of structures is allocated with memory manager of operation system and then converted to freelists. New structures are allocated from the freelists, and released ones are returned back to the freelists. If a list is exhausted a new array is allocated from heap memory.
+\subsection{Memory management.}
+Allocation of memory for fixed size records is implemented by means of standard approach, which is similar to \cite{gmemory}. Array of structures is allocated with memory manager of operation system and then converted to freelists. New structures are allocated from the freelists, and released ones are returned back to the freelists. If a list is exhausted a new array is allocated from heap memory if any.
 
-In the prover for each variant of records, own array is allocated and own freelist constructed. The garbage collection is synchronized with garbage collector of the D programming language runtime engine.
+In the prover for each variant of records, own array is allocated and own freelist constructed. The garbage collection is synchronized with garbage collector of the D programming language run time engine.
 
 
 %=======================================================================
