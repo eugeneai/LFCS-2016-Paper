@@ -33,7 +33,7 @@
 \mainmatter  % start of an individual contribution
 
 % first the title is needed
-\title{Software for Automated Theorem Proving Based on the Calculus of Positively Constructed Formulas\thanks{Ok}}
+\title{Software for Automated Theorem Proving Based on the Calculus of Positively Constructed Formulas\thanks{\textbf{Ok .....................!!!!!!!!!!!!!!!!!!..................}}}
 % a short form should be given in case it is too long for the running head
 \titlerunning{ATP Based on the PCF Calculus}
 
@@ -106,7 +106,7 @@ However, in this paper, we will not cover the human--orientability properties of
 
 Let's consider a language of first-order logic (FOL) that consists of first-order formulas (FOFs) built out of atomic formulas with $\&, \vee, \neg, \rightarrow, \leftrightarrow$ operators, $\forall$ and $\exists$ quantifier symbols and constants $true$ and $false$.  The concepts of \emph{term}, \emph{atom}, \emph{literal} we define in the usual way.
 
-Let $X = \{x_1,\ldots,x_k\}$ be a set of variables, $A = \{A_1,\ldots,A_m\}$ be a set of atomic formulas, and $F = \{F_1,\ldots,F_n\}$ be a set of FOFs. Then the following formulas $((\forall x_1) \ldots (\forall x_k) (A_1 \& \ldots \& A_m \rightarrow (F_1 \vee \ldots \vee F_n)))$ and $((\exists x_1) \ldots (\exists x_k) (A_1 \& \ldots \& A_m \& (F_1 \& \ldots \& F_n)))$ are denoted as  $\forall_XA\colon F$ and $\exists_XA\colon F$ respectively, keeping in mind that the $\forall$--quantifier corresponds to $\rightarrow F^{\vee}$, where $F^{\vee}$ means disjunction of all formulas from $F$, and $\exists$--quantifier corresponds to $\& F^{\&}$, where $F^{\&}$ means conjunctions of all formulas from $F$.
+Let $X = \{x_1,\ldots,x_k\}$ be a set of variables, $A = \{A_1,\ldots,A_m\}$ be a set of atomic formulas, and $F = \{F_1,\ldots,F_n\}$ be a set of FOFs. Then the following formulas $((\forall x_1) \ldots (\forall x_k) (A_1 \& \ldots \& A_m \rightarrow (F_1 \vee \ldots \vee F_n)))$ and $((\exists x_1) \ldots (\exists x_k) (A_1 \&$ $\ldots \& A_m \& (F_1 \& \ldots \& F_n)))$ are denoted as  $\forall_XA\colon F$ and $\exists_XA\colon F$ respectively, keeping in mind that the $\forall$--quantifier corresponds to $\rightarrow F^{\vee}$, where $F^{\vee}$ means disjunction of all formulas from $F$, and $\exists$--quantifier corresponds to $\& F^{\&}$, where $F^{\&}$ means conjunctions of all formulas from $F$.
 
 If $F = \emptyset$, then the formulas have the form $\forall_XA\colon\emptyset \equiv \forall_XA \rightarrow false$ and $\exists_XA\colon\emptyset \equiv \exists_XA \& true$, since the empty disjunction is identical to $false$, whereas the empty conjunction is identical to $true$.  The form $\forall_XA$ and $\exists_XA$ are abbreviations of such formulas.  If $X = \emptyset$, then $\forall A\colon F$ and $\exists A\colon F$ are analogous abbreviations.
 
@@ -119,7 +119,7 @@ $\forall \emptyset \equiv \forall \emptyset\colon\emptyset \equiv \forall true \
 
 Construction $\forall_XA$ and $\exists_XA$ are called positive \emph{type quantifiers} (TQ), because $A$ is a conjunction of only positive atoms and referred to as also as \emph{type condition} for $X$. In practise, this constructions denote phrases such as follows: ``for all $X$ satisfying $A$ there is...'' or ``there exists $X$ satisfying property $A$ such that...''; ``for all integer $x,y,z$ and $n>2$ there is $x^n + y^n \ne z^n$''.
 
-Originally, the term ``type quantifier'' was introduced by N.~Bourbaki \cite{Bourbaki} as part of notation for formalization of mathematics. But type quantifiers are stable in languages of another applied fields.
+\textbf{Originally, the term ``type quantifier'' was introduced by N.~Bourbaki \cite{Bourbaki} as part of notation for formalization of mathematics. But type quantifiers are stable in languages of another applied fields.}
 
 %========================================================
 \section{The Method of PCF}
@@ -206,7 +206,7 @@ A question $\forall_YD:\Upsilon$ to a base $\exists_XA$ has an {\em answer} $\th
 
 \begin{definition}[Splitting]
 \label{splitting}
-Let $B = \exists_XA\colon\Psi$, and $Q = \forall_YD\colon\Upsilon$, where $\Upsilon = \{\exists_{Z_1}C_1\colon\Gamma_1,\ldots,\exists_{Z_n}C_n\colon\Gamma_n\}$ then $split(B,Q) = \{\exists_{X \cup {Z_1}'} A \cup {C_1}'\colon\Psi \cup {\Gamma_1}',\ldots,\exists_{X \cup {Z_n}'} A \cup {C_n}'\colon\Psi \cup {\Gamma_n}'\}$, where $'$ is a variable renaming operator. We say that $B$ is split by $Q$. Obviously, $split(B,\forall_YD) = split(B,\forall_YD\colon\emptyset) = \emptyset$.
+Let $B = \exists_XA\colon\Psi$, and $Q = \forall_YD\colon\Upsilon$, where $\Upsilon = \{\exists_{Z_1}C_1\colon\Gamma_1,\ldots, \exists_{Z_n}C_n\colon\Gamma_n\}$ then $split(B,Q) = \{\exists_{X \cup {Z_1}'} A \cup {C_1}'\colon\Psi \cup {\Gamma_1}',\ldots,$ $\exists_{X \cup {Z_n}'} A \cup {C_n}'\colon\Psi \cup {\Gamma_n}'\}$, where $'$ is a variable renaming operator. We say that $B$ is split by $Q$. Obviously, $split(B,\forall_YD) = split(B,\forall_YD\colon\emptyset) = \emptyset$.
 \end{definition}
 
 \begin{definition}[the inference rule $\bomega$]
@@ -452,10 +452,10 @@ In the prover for each variant of records, own array is allocated and own freeli
 %==========================EXPERIMENTS==================================
 %=======================================================================
 \section{Experiments}
-Testing the developed prover is being performed on problems form TPTP \cite{tptp} library version 5.4.0 (Thousands of Problems for Theorem Provers, www.tptp.org). This library is the de facto standard for testing ATP provers. The type of problems that were chosen are the problems of FOF without equality. Total number of problems is 1221 with rating from 0.0 (very easy) to 1.0 (unresolved). Total number of solved problems is 780. The maximal rating of solved problem is 0.62. The best results among domains presented in the Table~1.
+Testing the prover under development is being performed on problems form TPTP \cite{tptp} library version 5.4.0 (Thousands of Problems for Theorem Provers, www.tptp.org). This library is the de facto standard for testing ATP provers. The type of problems that were chosen are the problems of FOF without equality. Total number of problems is 1221 with rating from 0.0 (very easy) to 1.0 (unresolved). Total number of solved problems is 780. The maximal rating of solved problem is 0.62. The best results among domains presented in Table~\ref{tbl:1}.
 
 \begin{table}
-\caption{Domains}
+\caption{Domains}\label{tbl:1}
 \begin{tabular}{|p{0.3\linewidth}|p{0.4\linewidth}|p{0.1\linewidth}|}
 
 \hline
@@ -472,9 +472,9 @@ Semantic Web  (SWB) & 25 & 22 \\
 \end{tabular}
 \end{table}
 
-10 hardest problems solved by our prover is presented in the Table~2.
+Ten hardest problems solved by our prover is presented in Table~\ref{tbl:2}.
 \begin{table}
-\caption{Hardest problems solved by our prover}
+\caption{Hardest problems solved by our prover}\label{tbl:2}
 \begin{tabular}{|p{0.2\linewidth}|p{0.2\linewidth}|p{0.2\linewidth}|p{0.2\linewidth}|}
 
 \hline
@@ -505,15 +505,14 @@ SWB029+3 &  0.38 &  55.27 &  98471 \\
 
 %График...
 
-Prover shown good results for problems, whose formalization in the PCF language contains large conjuncts (type conditions).
+Prover showed good performace for problems, whose formalization in the PCF language contains large conjuncts (type conditions).
 
 \subsection{Translation from TPTP to PCF}
 TPTP contains an axiom library, which consists of different files. Formula to be investigated is collected from the files. The collection is performed with special utilities such as \texttt{tptp4X}. The collected subformulas are passed to a translator from TPTP representation to the input language of the prover. The translator is implemented with the \texttt{hotptp-yl-parser-verbose} \cite{TPTPTrans} utility that translates input TPTP--files to abstract syntax trees. Translation component of the utility is generated on the base of syntactic analysis of the current specification of TPTP. Therefore, in each case of the specification refinement, the utility can be automatically updated (recompiled). Using this approach, we are able to adopt our prover to the new input language specification.
 
-The abstract syntax tree is passed to translation component that imports the tree, translates the predicate formula or CNF, performs some reduction of subformulas by applying a set of rules, converts the formulas into the PCF language, performs additional reduction of the PCFs, renames the quantifier variables, and, at the last step, outputs the conversion result as textual representation of the problem in the language of the prover.
+The abstract syntax tree is passed to translation component that imports the tree, translates the FOF or CNF, performs some reduction of subformulas by applying a set of rules, converts the formulas into the PCF language. Translator also performs additional trivial reduction of the PCFs, renames the quantifier variables, and, at the last step, outputs the conversion result as textual representation of the problem in the language of the prover.
 
-
-\subsection{Example of Formula}
+\subsection{Example of formula}
 Problem SYN380+1.p from TPTP library in our prover input language has a following form:
 \begin{quote}
 \texttt{\raggedright\noindent
@@ -533,10 +532,10 @@ Problem SYN380+1.p from TPTP library in our prover input language has a followin
 \subsection{Example of solved problem}
 Let us consider COM003+1.p (``The halting problem is undecidable'') problem with 0.33 rating.
 
-The results of solving this problem by our prover and other provers are presented in Table~3.
+The results of solving this problem by our prover and other provers are presented in Table~\ref{tab:3}.
 
 \begin{table}
-\caption{COM003+1.p solving}
+\caption{Solution timing for COM003+1.p}\label{tab:3}
 \begin{tabular}{|p{0.2\linewidth}|p{0.35\linewidth}|}
 
 \hline
@@ -577,19 +576,22 @@ Zenon & 0.08 \\
 %==========================================================
 \subsection{Comments on strategies}
 
+In this section we list some points of the implemented strategies practical usage experience.
+
 %=============================
 \subsubsection{Lazy concretization.}
-Lazy concretization strategy allows one in most cases to find a substitution for an unconfined variable in acceptable time as compared to the sequential enumeration of Herbrand universum. The constraints are the most valuable part of this strategy, which allow to decrease the number of steps of logical inference in comparison to the unconstrained strategy. The decrease of the number of steps leads to a decrease of the problem solving time. Application of the constraint~1 is the best way of the inference time reduction in the case when a formula has questions with disjunctive branching and the constraint~2 in case if the formula contains no questions without disjunctive branching.
+Lazy concretization strategy allows one in most cases to find a substitution for an unconfined variable in acceptable time as compared to the sequential enumeration of Herbrand universum. The constraints are the most valuable part of this strategy, which allow to decrease the number of steps of logical inference in comparison to the unconstrained strategy. The decrease of the number of steps leads to a decrease of the problem solving time. \textbf{Application of the constraint~1 is the best way of the inference time reduction in the case when a formula has questions with disjunctive branching and the constraint~2 in case if the formula contains no questions without disjunctive branching}.
 
 
 %=============================
-\subsubsection{$k,m$--condition.}
-The efficiency of this strategy reveals in the problems with disjunctive branching. In all cases of acceptable application of this strategy and correctly chosen parameters, the noticeable improvement is achieved.
+\subsubsection{$\boldsymbol{k,m}$--constraint.}
+The value of this strategy reveals in the problems with disjunctive branching. A noticeable improvement of efficiency is achieved in all cases of acceptable application of this strategy and correctly chosen parameters.
+
 %===========================
 \subsubsection{Parallel stratgies.}
-The important quality of parallel schemes of algorithms is their scalability, i.e., the performance improvement respect to increase of the number of computational nodes (CNs). That’s why the main characteristic of the prover productivity is not the time of execution of the program, but the ratio of program execution time in parallel mode on a given number of CNs to the program execution time on a single CN. The ratio is accounted for various number of CNs.
+The important quality of parallel schemes of algorithms is their scalability, i.e., the performance improvement respect to increase of the number of computational nodes (CNs). That’s why the main characteristic of the prover productivity is not the time of execution of the program, but the ratio of program execution time in parallel mode on a given number of CNs to the program execution time on a single CN. The ratio has been evaluated for various number of CNs.
 
-Experiments were carried out on the logical problems which PCF--formalizations have necessary properties for the parallel strategies: disjunctive branching, large number of questions, large conjuncts in questions. In Fig.~\ref{fig:parallel} the results of experiments are shown.
+Experiments were carried out on the logical problems which PCF--for\-ma\-li\-za\-ti\-ons having necessary properties for the parallel strategies utilization: disjunctive branching, large number of questions, large conjuncts in questions. In Fig.~\ref{fig:parallel} the results of experiments are shown. \textbf{In the figure ``Strategy 1'' denotes ... and ``Strategy 2'' denotes ...}
 
 \begin{figure}[h]
   %\vspace{0.5cm}
