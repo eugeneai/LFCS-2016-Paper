@@ -92,9 +92,9 @@ A description of the calculus of positively constructed formulas (PCF) and prove
 
 Originally \cite{SNV1990,ICDS2000} the calculus of positively constructed formulas (PCF) was developed by Russian scientists S.N. Vassilyev and A.K. Zherlov by an evolutionary way in describing and solving control theory (CT) problems. In \cite{ICDS2000} the PCF calculus is presented as first-order logical formalism, examples of CT problems described and solved by the PCF calculus (elevator group control, mobile robot action planning and telescope guidance), as well as proof of soundness and completeness.
 
-The PCF calculus is both machine-oriented, and also human-oriented, naturally aimed at solving the problems of dynamic systems control thanks to its features such as follows: unique inference rule and simple scheme of axioms; modifiability of semantics (constructive, monotonic, temporal, etc.) and besides it is possible to construct intuitionistic inferences of some non-Horn formulas; the explicit usage of $\forall$ and $\exists$ quantifiers, the scolemization procedure is not required.
+The PCF calculus is both machine-oriented, and also human-oriented, naturally aimed at solving the problems of dynamic systems control thanks to its features such as follows: unique inference rule and simple scheme of axioms; modifyability of semantics (constructive, monotonic, temporal, etc.) and besides it is possible to construct intuitionistic inferences of some non-Horn formulas; the explicit usage of $\forall$ and $\exists$ quantifiers, the scolemization procedure is not required.
 
-However, in this paper, we will not cover the human--orientability properties of the PCF calculus and its dynamic systems control properties as well.  This and the calculus capabilities in action planning is described in \cite{ICDS2000}.   Here, we deal with the automatic search of a logical inference, i.e., the inference engine capabilities.  In order to estimate the applicability of the PCF calculus for automatic theorem proving we develop a prover program and test it on problems from TPTP library.
+However, in this paper, we will not cover the human--orientation properties of the PCF calculus and its dynamic systems control properties as well.  This and the calculus capabilities in action planning is described in \cite{ICDS2000}.   Here, we deal with the automatic search of a logical inference, i.e., the inference engine capabilities.  In order to estimate the applicability of the PCF calculus for automatic theorem proving we develop a prover program and test it on problems from TPTP library.
 
 %This paper contains a description of the PCF calculus, an implementation of the prover program, and strategies of logical inference used to direct the inference search algorithms. The results of a comparison of the developed prover system with other provers are presented.
 
@@ -112,12 +112,12 @@ If $F = \emptyset$, then the formulas have the form $\forall_XA\colon\emptyset \
 
 The set of atoms $A$ is called {\em conjunct}. The empty conjunct is identical to $true$ as it was already mentioned.
 
-Variables from $X$ are bound by correspoding quantifiers and called $\forall$--variables and $\exists$--variables, respectively. In $\forall_XA$, a variable from $X$ that does not appear in conjunct $A$ is called {\em unconfined} variable.
+Variables from $X$ are bound by corresponding quantifiers and called $\forall$--variables and $\exists$--variables, respectively. In $\forall_XA$, a variable from $X$ that does not appear in conjunct $A$ is called {\em unconfined} variable.
 
 %В связи с изложенными сокращениями отметим следующий факт:
 $\forall \emptyset \equiv \forall \emptyset\colon\emptyset \equiv \forall true \rightarrow false \equiv false$
 
-Construction $\forall_XA$ and $\exists_XA$ are called positive \emph{type quantifiers} (TQ), because $A$ is a conjunction of only positive atoms and referred to as also as \emph{type condition} for $X$. In practise, this constructions denote phrases such as follows: ``for all $X$ satisfying $A$ there is...'' or ``there exists $X$ satisfying property $A$ such that...''; ``for all integer $x,y,z$ and $n>2$ there is $x^n + y^n \ne z^n$''.
+Construction $\forall_XA$ and $\exists_XA$ are called positive \emph{type quantifiers} (TQ), because $A$ is a conjunction of only positive atoms and referred to as also as \emph{type condition} for $X$. In practice, this constructions denote phrases such as follows: ``for all $X$ satisfying $A$ there is...'' or ``there exists $X$ satisfying property $A$ such that...''; ``for all integer $x,y,z$ and $n>2$ there is $x^n + y^n \ne z^n$''.
 
 Originally, the term ``type quantifier'' was introduced by N.~Bourbaki \cite{Bourbaki} as part of notation for formalization of mathematics. But type quantifiers are stable in languages of another applied fields.
 
@@ -201,7 +201,7 @@ For convenience we use symbol ``--'' to denote the adjacent edges in tree--like 
 
 \begin{definition}[Answer]
 \label{answer}
-A question $\forall_YD:\Upsilon$ to a base $\exists_XA$ has an {\em answer} $\theta$ if and only if $\theta$ is a substitution $Y \rightarrow H^{\infty} \cup X$ and $D\theta \subseteq A$, where $H^{\infty}$ is Herbrand universe based on constans and function symbols that occur in corresponding base subformula.
+A question $\forall_YD:\Upsilon$ to a base $\exists_XA$ has an {\em answer} $\theta$ if and only if $\theta$ is a substitution $Y \rightarrow H^{\infty} \cup X$ and $D\theta \subseteq A$, where $H^{\infty}$ is Herbrand universe based on constant and function symbols that occur in corresponding base subformula.
 \end{definition}
 
 \begin{definition}[Splitting]
@@ -381,9 +381,9 @@ The formula has disjunctive branching and it is deep. PST for the refutation of 
 
 According to the Definition~3, the inference rule $\omega$ can be applied if a question $\forall \bar{y}\colon A$ to a base $\exists \bar{x}\colon B$ has an answer $\theta$, such that $\theta$ is a substitution $\bar{y} \rightarrow H^{\infty}$ and $A\theta \subseteq B$. If all the variables in $\bar{y}$ are occurred in $A$, then the search of corresponding elements from $H^{\infty}$ is carried on by the algorithm of subsumption among corresponding base of facts, since the conditions of subsumption of the sets have to be satisfied. If a variable in the $\bar{y}$ is not occurred in $A$ then the variable is called \emph{unconfined variable} and it is not used in a subsumption. However, we need to find a substitution for these variables as well.  Each of the elements of Herbrand universe is a correct substitution for the unconfined variable. This rises a problem related to Herbrand universe. In the general case the universe is an unlimited set, and it is not known what element should be taken as a substitution for the variable.
 
-The main concept of lazy instantiation is as follows. Instead of selecting a concrete element of a Herbrand universum for a substitution of an unconfined variable an {\em unspecified Herbrand element} (UHE) is used temporally. The UHE will be concretized further to a proper term. The result of the concertizing depends on the logical inference strategy. UHE will be instantiated to a ground term, or in some situations, it could remain unbound.
+The main concept of lazy instantiation is as follows. Instead of selecting a concrete element of a Herbrand universe for a substitution of an unconfined variable an {\em unspecified Herbrand element} (UHE) is used temporally. The UHE will be concretized further to a proper term. The result of the concretion depends on the logical inference strategy. UHE will be instantiated to a ground term, or in some situations, it could remain unbound.
 
-The UHE can be concretized in a term, containing other UHEs. The variant of the concretizing on the each step is chosen according to inference strategies to make refutation possible, e.g. by analyzing a term structure of a question.  The process is organized in a trendy ``lazy'' manner: UHE is instantiate as concrete, as it is enough for answering a question, i.e. instantiation is generally partial, for example UHE for $h$ is concretized to $f(h_1)$, where $h_1$ is a new UHE.
+The UHE can be concretized in a term, containing other UHEs. The variant of the concretion on the each step is chosen according to inference strategies to make refutation possible, e.g. by analyzing a term structure of a question.  The process is organized in a trendy ``lazy'' manner: UHE is instantiate as concrete, as it is enough for answering a question, i.e. instantiation is generally partial, for example UHE for $h$ is concretized to $f(h_1)$, where $h_1$ is a new UHE.
 
 UHE by nature is similar to unconcretized $\forall$-variable in the sense that it is mutable, i.e., it is potentially concretized, however all such changes must be aimed at instantiation of  UHE, i.e. UHE can be substituted only to a term or to other UHE, but not to a variable.
 
@@ -403,16 +403,16 @@ At the first step there is an answer $\{x \rightarrow h_1\}$ to the first questi
 To improve the search efficiency of the strategy, we use two constraints.
 
 %Для стртегии ленивой конкретизации предложено два типа ограничений
-\subsubsection{Constraint~1: Limit of concretizations number.}
+\subsubsection{Constraint~1: Limit of concretion number.}
 %Ограничение количества конкретизаций.
 
 %---
-Two UHEs are \emph{similar}, if they were generated as the result of a substitution for the same unconfined variable. This situation appears if for a question with unconfined variables a sequence of a similar answers were constructed, such that on every step of the sequence new UHE created as a substitution. The constraint for the similar UHE--concretizations excludes the possibilities of generation of new UHE when it is not necessary. For every UHE a reference to its unconfined variable (that resulted to the USE production) is stored. The set of terms, which concretized an unconfined variable through its UHE, is stored in questions. The engine allows tracking the UHE concretization. If a predefined limit of the concretizations is exceeded then all further concretizations rejected. The limit is chosen by user according to a specific and features of the problem under investigation, or it is denoted as $1$, and increased after an unsuccessfull logical inference, then the inference attempt is repeated.
+Two UHEs are \emph{similar}, if they were generated as the result of a substitution for the same unconfined variable. This situation appears if for a question with unconfined variables a sequence of a similar answers were constructed, such that on every step of the sequence new UHE created as a substitution. The constraint for the similar UHE--concretions excludes the possibilities of generation of new UHE when it is not necessary. For every UHE a reference to its unconfined variable (that resulted to the USE production) is stored. The set of terms, which concretized an unconfined variable through its UHE, is stored in questions. The engine allows tracking the UHE concretion. If a predefined limit of the concretions is exceeded then all further concretions rejected. The limit is chosen by user according to a specific and features of the problem under investigation, or it is denoted as $1$, and increased after an unsuccessfull logical inference, then the inference attempt is repeated.
 
 \subsubsection{Constraint~2: Storing expressions which contain UHE.}
 %Сохранение выражений, содержащих НЭЭ
 
-Another UHE--approach to process unconfined variables is based on storing in an UHE original type condition that contained the variable.  Later it could be used as a constrain for possible substitution value from $H^{\infty}$ acceptable to form an answer. This is a form of lazy computation of other form as compared to lazy concretizing, but instead of sequential concretizing the USE instantiates by a term from a set $H^{\infty}$. The installation is stored in UHE. If the UHE can be instantiated in a new value from $H^{\infty}$, it does, and the value also stored in UHE. So we can count values one by one and prohibit repeating.
+Another UHE--approach to process unconfined variables is based on storing in an UHE original type condition that contained the variable.  Later it could be used as a constrain for possible substitution value from $H^{\infty}$ acceptable to form an answer. This is a form of lazy computation of other form as compared to lazy concretion, but instead of sequential concretizing the USE instantiates by a term from a set $H^{\infty}$. The installation is stored in UHE. If the UHE can be instantiated in a new value from $H^{\infty}$, it does, and the value also stored in UHE. So we can count values one by one and prohibit repeating.
 
 
 %====================================================================================
@@ -425,7 +425,7 @@ An answer to a question is accepted if at some point of the following $k$ steps 
 \subsubsection{$\boldsymbol{k}$--unrefutation.}
 For a question with disjunctive branching an answer is accepted if during next $k$ steps no refutation for the base subformula was achieved, using the questions without disjunctive branching. This strategy, as it is in the previous variant, reduces growth of a formula due to answering questions with disjunctive branching. If no refutation can be constructed using this strategy, then answering to the questions allowed.
 
-\subsubsection{$\boldsymbol{k,m}$--concretization.}
+\subsubsection{$\boldsymbol{k,m}$--concretion.}
 An answer for a question is accepted if during next $k$ steps at least $m$ UHE are concretized. This strategy is also aimed at limiting a complexity of the formula. Large amounts of additional information and conditions are associated with unconcretized UHE. After an UHE is concretized, the associations are released. As soon we instantiate the UHE as soon we will take advantage of additional memory.
 
 %====================================================================================
@@ -435,7 +435,7 @@ An answer for a question is accepted if during next $k$ steps at least $m$ UHE a
 Let's consider techniques and strategies for parallel implementations of logical inference algorithms in the PCF calculus.
 
 \subsubsection{Independent asynchronous refutation of bases.}
-If a question has disjunctive branching then, after we have answered that question, the formula will splits and transforms to the formula with a set of bases according to the set of answered question consequents, i.e. in general case the number of the base subformulas is increasing in every step of logical inference. In addition, the original formalization of a problem in PCF language can contain more than one base subformulas. In order to refute the original PCF formula every base need to be refuted. The refutation of the base subformulas can be processed in parallel in an independent thread. This is possible if the bases are independent from each other, i.e. they don't share $\forall$--variables and UHEs. Bases never share $\forall$--variables because bases don't contain $\forall$--variables at all (by definitions), as they contain only ground terms. However, bases can share the UHEs in case of usage of the lazy concretization strategy. Therefore, this strategy can be applied in case if the lazy concretization strategy is not used. According to features of PCF, the PCF have property called ``OR--parallelism''.
+If a question has disjunctive branching then, after we have answered that question, the formula will splits and transforms to the formula with a set of bases according to the set of answered question consequents, i.e. in general case the number of the base subformulas is increasing in every step of logical inference. In addition, the original formalization of a problem in PCF language can contain more than one base subformulas. In order to refute the original PCF formula every base need to be refuted. The refutation of the base subformulas can be processed in parallel in an independent thread. This is possible if the bases are independent from each other, i.e. they don't share $\forall$--variables and UHEs. Bases never share $\forall$--variables because bases don't contain $\forall$--variables at all (by definitions), as they contain only ground terms. However, bases can share the UHEs in case of usage of the lazy concretion strategy. Therefore, this strategy can be applied in case if the lazy concretion strategy is not used. According to features of PCF, the PCF have property called ``OR--parallelism''.
 
 \subsubsection{Parallel answer search.}
 In addition to the OR--parallelism, parallel schemes of algorithms to search answers for each questions can be constructed. Since the questions do not share variables, as in previous strategy, the answer search procedure can be performed also in an individual computation thread. In addition, like in the previous strategy, second parallel strategy formulated as follows: each answer search procedure to a question is independent of other questions.
@@ -569,7 +569,7 @@ Zenon & 0.08 \\
 
 %Rating is 0.54. Time for solving 5.8s. Number of steps: 82764.
 
-%The lazy concretization (first constraint), $8$--unrefutation, $8,1$--concretization, data sharing in bases.
+%The lazy concretion (first constraint), $8$--unrefutation, $8,1$--concretion, data sharing in bases.
 
 
 
@@ -579,8 +579,8 @@ Zenon & 0.08 \\
 In this section we list some points of the implemented strategies practical usage experience.
 
 %=============================
-\subsubsection{Lazy concretization.}
-Lazy concretization strategy allows one in most cases to find a substitution for an unconfined variable in acceptable time as compared to the sequential enumeration of Herbrand universum. The constraints are the most valuable part of this strategy, which allow to decrease the number of steps of logical inference in comparison to the unconstrained strategy. The decrease of the number of steps leads to a decrease of the problem solving time. Application of the UHE constraint~1 (limiting depth of instantiation) is the best way of the inference time reduction in the case when a formula has questions with disjunctive branching and the constraint~2 (storing UHE expression) in case if the formula contains no questions without disjunctive branching.
+\subsubsection{Lazy concretion.}
+Lazy concretion strategy allows one in most cases to find a substitution for an unconfined variable in acceptable time as compared to the sequential enumeration of Herbrand universum. The constraints are the most valuable part of this strategy, which allow to decrease the number of steps of logical inference in comparison to the unconstrained strategy. The decrease of the number of steps leads to a decrease of the problem solving time. Application of the UHE constraint~1 (limiting depth of instantiation) is the best way of the inference time reduction in the case when a formula has questions with disjunctive branching and the constraint~2 (storing UHE expression) in case if the formula contains no questions without disjunctive branching.
 
 
 %=============================
@@ -608,7 +608,7 @@ Experiments were carried out on the logical problems which PCF--for\-ma\-li\-za\
 %==========================CONCLUSION===================================
 %=======================================================================
 \section*{Conclusion}
-In this paper, we briefly presented the results of the positively constructed formulas (PCF) calculus investigation in the context of the automatic theorem proving. The main result is a prover program implemented based on the PCF calculus. Several logical inference strategies were devised, adopted from other papers and implemented in this prover: memory sharing, lazy concretization, $k,m$--condition, parallel strategies. A special global data structure (proof state tree) has been developed. Most of the strategies are implemented on the base of the structure.
+In this paper, we briefly presented the results of the positively constructed formulas (PCF) calculus investigation in the context of the automatic theorem proving. The main result is a prover program implemented based on the PCF calculus. Several logical inference strategies were devised, adopted from other papers and implemented in this prover: memory sharing, lazy concretion, $k,m$--condition, parallel strategies. A special global data structure (proof state tree) has been developed. Most of the strategies are implemented on the base of the structure.
 
 Testing our prover has been carried out on problems from TPTP library. Testing has shown that the PCF calculus is suitable for automated theorem proving and some problems are solved more efficiently than other provers. The classes of problems, which are the most suitable for our system, are described.
 
