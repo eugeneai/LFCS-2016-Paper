@@ -33,7 +33,7 @@
 \mainmatter  % start of an individual contribution
 
 % first the title is needed
-\title{Software for Automated Theorem Proving Based on the Calculus of Positively Constructed Formulas\thanks{\textbf{Ok .....................!!!!!!!!!!!!!!!!!!..................}}}
+\title{Software for Automated Theorem Proving Based on the Calculus of Positively Constructed Formulas\thanks{Research is supported by Russian Foundation of Basic Research, grant No 14-01-31449~mol\_a.}}
 % a short form should be given in case it is too long for the running head
 \titlerunning{ATP Based on the PCF Calculus}
 
@@ -119,7 +119,7 @@ $\forall \emptyset \equiv \forall \emptyset\colon\emptyset \equiv \forall true \
 
 Construction $\forall_XA$ and $\exists_XA$ are called positive \emph{type quantifiers} (TQ), because $A$ is a conjunction of only positive atoms and referred to as also as \emph{type condition} for $X$. In practise, this constructions denote phrases such as follows: ``for all $X$ satisfying $A$ there is...'' or ``there exists $X$ satisfying property $A$ such that...''; ``for all integer $x,y,z$ and $n>2$ there is $x^n + y^n \ne z^n$''.
 
-\textbf{Originally, the term ``type quantifier'' was introduced by N.~Bourbaki \cite{Bourbaki} as part of notation for formalization of mathematics. But type quantifiers are stable in languages of another applied fields.}
+Originally, the term ``type quantifier'' was introduced by N.~Bourbaki \cite{Bourbaki} as part of notation for formalization of mathematics. But type quantifiers are stable in languages of another applied fields.
 
 %========================================================
 \section{The Method of PCF}
@@ -367,7 +367,7 @@ The formula has disjunctive branching and it is deep. PST for the refutation of 
 \begin{figure}[h]
   \vspace{0.5cm}
   \centering
-  \includegraphics[width=0.82\linewidth]{img/DataSharing2p1.eps}
+  \includegraphics[width=0.82\linewidth]{img/DataSharing2}
   \caption{Example of PST for a base subformula refutation}
   \label{fig:datasharing2}
 \end{figure}
@@ -451,7 +451,7 @@ In the prover for each variant of records, own array is allocated and own freeli
 %=======================================================================
 %==========================EXPERIMENTS==================================
 %=======================================================================
-\section{Experiments}
+\section{Testing the prover}
 Testing the prover under development is being performed on problems form TPTP \cite{tptp} library version 5.4.0 (Thousands of Problems for Theorem Provers, www.tptp.org). This library is the de facto standard for testing ATP provers. The type of problems that were chosen are the problems of FOF without equality. Total number of problems is 1221 with rating from 0.0 (very easy) to 1.0 (unresolved). Total number of solved problems is 780. The maximal rating of solved problem is 0.62. The best results among domains presented in Table~\ref{tbl:1}.
 
 \begin{table}
@@ -580,7 +580,7 @@ In this section we list some points of the implemented strategies practical usag
 
 %=============================
 \subsubsection{Lazy concretization.}
-Lazy concretization strategy allows one in most cases to find a substitution for an unconfined variable in acceptable time as compared to the sequential enumeration of Herbrand universum. The constraints are the most valuable part of this strategy, which allow to decrease the number of steps of logical inference in comparison to the unconstrained strategy. The decrease of the number of steps leads to a decrease of the problem solving time. \textbf{Application of the constraint~1 is the best way of the inference time reduction in the case when a formula has questions with disjunctive branching and the constraint~2 in case if the formula contains no questions without disjunctive branching}.
+Lazy concretization strategy allows one in most cases to find a substitution for an unconfined variable in acceptable time as compared to the sequential enumeration of Herbrand universum. The constraints are the most valuable part of this strategy, which allow to decrease the number of steps of logical inference in comparison to the unconstrained strategy. The decrease of the number of steps leads to a decrease of the problem solving time. Application of the UHE constraint~1 (limiting depth of instantiation) is the best way of the inference time reduction in the case when a formula has questions with disjunctive branching and the constraint~2 (storing UHE expression) in case if the formula contains no questions without disjunctive branching.
 
 
 %=============================
@@ -591,7 +591,7 @@ The value of this strategy reveals in the problems with disjunctive branching. A
 \subsubsection{Parallel stratgies.}
 The important quality of parallel schemes of algorithms is their scalability, i.e., the performance improvement respect to increase of the number of computational nodes (CNs). That’s why the main characteristic of the prover productivity is not the time of execution of the program, but the ratio of program execution time in parallel mode on a given number of CNs to the program execution time on a single CN. The ratio has been evaluated for various number of CNs.
 
-Experiments were carried out on the logical problems which PCF--for\-ma\-li\-za\-ti\-ons having necessary properties for the parallel strategies utilization: disjunctive branching, large number of questions, large conjuncts in questions. In Fig.~\ref{fig:parallel} the results of experiments are shown. \textbf{In the figure ``Strategy 1'' denotes ... and ``Strategy 2'' denotes ...}
+Experiments were carried out on the logical problems which PCF--for\-ma\-li\-za\-ti\-ons having necessary properties for the parallel strategies utilization: disjunctive branching, large number of questions, large conjuncts in questions. In Fig.~\ref{fig:parallel} results of experiments are shown. In the figure ``Strategy 1'' denotes paralleling base subformula refutation and ``Strategy 2'' references to parallel answer search to a question.
 
 \begin{figure}[h]
   %\vspace{0.5cm}
@@ -608,7 +608,7 @@ Experiments were carried out on the logical problems which PCF--for\-ma\-li\-za\
 %==========================CONCLUSION===================================
 %=======================================================================
 \section*{Conclusion}
-In this paper, we presented the results of the positively constructed formulas (PCF) calculus investigation in the context of the automatic theorem proving. The main result is a prover program implemented based on the PCF calculus. Several logical inference strategies were devised, adopted from other papers and implemented in this prover: memory sharing, lazy concretization, $k,m$--condition, parallel strategies. A special global data structure (proof state tree) has been developed. Most of the strategies are implemented on the base of the structure.
+In this paper, we briefly presented the results of the positively constructed formulas (PCF) calculus investigation in the context of the automatic theorem proving. The main result is a prover program implemented based on the PCF calculus. Several logical inference strategies were devised, adopted from other papers and implemented in this prover: memory sharing, lazy concretization, $k,m$--condition, parallel strategies. A special global data structure (proof state tree) has been developed. Most of the strategies are implemented on the base of the structure.
 
 Testing our prover has been carried out on problems from TPTP library. Testing has shown that the PCF calculus is suitable for automated theorem proving and some problems are solved more efficiently than other provers. The classes of problems, which are the most suitable for our system, are described.
 
@@ -621,26 +621,20 @@ Further investigations aimed at implementation of a productive logical inference
 %=======================================================================
 \begin{thebibliography}{4}
 
-\bibitem{DPL2} Alexandrescu, A. The D Programming Language. -- Addison-Wesley Professional, 2010. -- 460p.
-
+\bibitem{SNV1990} Vassilyev, S.N.: Machine Synthesis of Mathematical Theorems. The Journal of Logic programming, V.9, No.2--3, pp. 235--266 (1990)
+\bibitem{ICDS2000} Vassilyev, S.N., Zherlov, A.K., Fedunov, E.A.,
+Fedosov, B.E.: Intelligent Control of Dynamic Systems. Moscow: Fizmatlit (2000)(in Russian)
+\bibitem{Bourbaki} Bourbaki, N.: Theory of Sets. Paris, Hermann (1968)
 \bibitem{DPL1} Armstrong, J. D Programming Language. URL: http://www.digitalmars.com/d/.
-
+\bibitem{DPL2} Alexandrescu, A. The D Programming Language. -- Addison-Wesley Professional, 2010. -- 460p.
 \bibitem{Erlang1} Armstrong, J. Programming Erlang.  -- The Pragmatic Programmers, 2007. -- 519p.
-
-\bibitem{TPTPTrans} Gelder, A.V. TPTPparser utility. 2006. URL: http://users.soe.ucsc.edu/\~{}avg/TPTPparser/.
-
 \bibitem{gmemory} GLIB: Memory Slices. URL: http://developer.gnome.org/glib/2.34/glib-Memory-Slices.html.
-
+\bibitem{tptp} Sutcliffe, G. The TPTP Problem Library and Associated Infrastructure: The FOF and CNF Parts, v3.5.0 // Journal of Automated Reasoning. V43, N4, pp.337--362.
+\bibitem{TPTPTrans} Gelder, A.V. TPTPparser utility. 2006. URL: http://users.soe.ucsc.edu/\~{}avg/TPTPparser/.
 \bibitem{subtree} Graf, P. Substitution Tree Indexing // Proceedings of the 6th International Conference on Rewriting Techniques and Applications. 1995. pp.~117--131.
 
 %\bibitem{HAR} Robinson, A., Voronkov, A. (eds.) Handbook of Automated Reasoning. -- MIT Press, Cambridge, 2001. -- 2150p.
 
-\bibitem{tptp} Sutcliffe, G. The TPTP Problem Library and Associated Infrastructure: The FOF and CNF Parts, v3.5.0 // Journal of Automated Reasoning. V43, N4, pp.337--362.
-
-\bibitem{SNV1990} Vassilyev, S.N.: Machine Synthesis of Mathematical Theorems. The Journal of Logic programming, V.9, No.2--3, pp. 235--266 (1990)
-
-\bibitem{ICDS2000} Vassilyev, S.N., Zherlov, A.K., Fedunov, E.A.,
-Fedosov, B.E.: Intelligent Control of Dynamic Systems. Moscow: Fizmatlit (2000)(in Russian)
 
 \end{thebibliography}
 
