@@ -505,12 +505,12 @@ SWB029+3 &  0.38 &  55.27 &  98471 \\
 
 %График...
 
-Prover showed good performace for problems, whose formalization in the PCF language contains large conjuncts (type conditions).
+Prover showed good performance for problems, whose formalization in the PCF language contains large conjuncts (type conditions).
 
 \subsection{Translation from TPTP to PCF}
 TPTP contains an axiom library, which consists of different files. Formula to be investigated is collected from the files. The collection is performed with special utilities such as \texttt{tptp4X}. The collected subformulas are passed to a translator from TPTP representation to the input language of the prover. The translator is implemented with the \texttt{hotptp-yl-parser-verbose} \cite{TPTPTrans} utility that translates input TPTP--files to abstract syntax trees. Translation component of the utility is generated on the base of syntactic analysis of the current specification of TPTP. Therefore, in each case of the specification refinement, the utility can be automatically updated (recompiled). Using this approach, we are able to adopt our prover to the new input language specification.
 
-The abstract syntax tree is passed to translation component that imports the tree, translates the FOF or CNF, performs some reduction of subformulas by applying a set of rules, converts the formulas into the PCF language. Translator also performs additional trivial reduction of the PCFs, renames the quantifier variables, and, at the last step, outputs the conversion result as textual representation of the problem in the language of the prover.
+The abstract syntax tree is passed to translation component that imports the tree, translates the FOF or CNF (conjunctive normal form), performs some reduction of subformulas by applying a set of rules, converts the formulas into the PCF language. Translator also performs additional trivial reduction of the PCFs, renames the quantifier variables, and, at the last step, outputs the conversion result as textual representation of the problem in the language of the prover.
 
 \subsection{Example of formula}
 Problem SYN380+1.p from TPTP library in our prover input language has a following form:
@@ -580,7 +580,7 @@ In this section we list some points of the implemented strategies practical usag
 
 %=============================
 \subsubsection{Lazy concretion.}
-Lazy concretion strategy allows one in most cases to find a substitution for an unconfined variable in acceptable time as compared to the sequential enumeration of Herbrand universum. The constraints are the most valuable part of this strategy, which allow to decrease the number of steps of logical inference in comparison to the unconstrained strategy. The decrease of the number of steps leads to a decrease of the problem solving time. Application of the UHE constraint~1 (limiting depth of instantiation) is the best way of the inference time reduction in the case when a formula has questions with disjunctive branching and the constraint~2 (storing UHE expression) in case if the formula contains no questions without disjunctive branching.
+Lazy concretion strategy allows one in most cases to find a substitution for an unconfined variable in acceptable time as compared to the sequential enumeration of Herbrand universe. The constraints are the most valuable part of this strategy, which allow to decrease the number of steps of logical inference in comparison to the unconstrained strategy. The decrease of the number of steps leads to a decrease of the problem solving time. Application of the UHE constraint~1 (limiting depth of instantiation) is the best way of the inference time reduction in the case when a formula has questions with disjunctive branching and the constraint~2 (storing UHE expression) in case if the formula contains no questions without disjunctive branching.
 
 
 %=============================
@@ -588,8 +588,8 @@ Lazy concretion strategy allows one in most cases to find a substitution for an 
 The value of this strategy reveals in the problems with disjunctive branching. A noticeable improvement of efficiency is achieved in all cases of acceptable application of this strategy and correctly chosen parameters.
 
 %===========================
-\subsubsection{Parallel stratgies.}
-The important quality of parallel schemes of algorithms is their scalability, i.e., the performance improvement respect to increase of the number of computational nodes (CNs). That’s why the main characteristic of the prover productivity is not the time of execution of the program, but the ratio of program execution time in parallel mode on a given number of CNs to the program execution time on a single CN. The ratio has been evaluated for various number of CNs.
+\subsubsection{Parallel strategies.}
+The important quality of parallel schemes of algorithms is their scaleability, i.e., the performance improvement respect to increase of the number of computational nodes (CNs). That’s why the main characteristic of the prover productivity is not the time of execution of the program, but the ratio of program execution time in parallel mode on a given number of CNs to the program execution time on a single CN. The ratio has been evaluated for various number of CNs.
 
 Experiments were carried out on the logical problems which PCF--for\-ma\-li\-za\-ti\-ons having necessary properties for the parallel strategies utilization: disjunctive branching, large number of questions, large conjuncts in questions. In Fig.~\ref{fig:parallel} results of experiments are shown. In the figure ``Strategy 1'' denotes paralleling base subformula refutation and ``Strategy 2'' references to parallel answer search to a question.
 
